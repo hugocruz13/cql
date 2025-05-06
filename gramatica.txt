@@ -1,0 +1,65 @@
+literals = ['=' , '<>' , '<' , '>' , '<=' , '>=', '(' ')', '*' ]
+
+Gramática:
+
+	PROG → CMDLIST
+	   
+	CMDLIST → CMD 
+	        | CMD CMDLIST
+				
+	CMD → CONF
+	    | QRS
+		| NEW
+		| PROCS
+		| CMTS
+			
+	CONF → "IMPORT" "TABLE" id "FROM" file ';'
+		 | "EXPORT" "TABLE" id "AS" file ';'
+		 | "DISCARD" "TABLE" id ';'
+		 | "RENAME" "TABLE" id id ';'
+		 | "PRINT" "TABLE" id ';'
+			
+	QRS → "SELECT" SELEC "FROM" id ';' 
+        | "SELECT" SELEC "FROM" id "WHERE" CONDLIST ';'
+		| "SELECT" SELEC "FROM" id "LIMIT" num ';' 
+        | "SELECT" SELEC "FROM" id "WHERE" CONDLIST "LIMIT" num';'
+			
+	SELEC → '*'
+          | COLLIST
+			
+	COLLIST → key
+	        | key, COLLIST
+	
+	CONDLIST → COND "AND" CONDLIST
+               | COND
+			   
+	COND → key Operador VALOR 
+	
+	Operador → '=' 
+	         | '<>' 
+			 | '<' 
+			 | '>' 
+			 | '<=' 
+			 | '>='
+	  
+	VALOR → num
+	      | string
+		
+	NEW → "CREATE" "TABLE" id QRS ';'
+		| "CREATE" "TABLE" id "FROM" id "JOIN" id "USING"'('key')' ';'
+	
+	PROCS → "PROCEDURE" nome "DO" CMDLIST "END"
+	      | "CALL" nome ';'
+	
+	CMTS → '--' ate ao fim
+	     | '{-' texto_varias_linhas '-}'
+	
+
+CMDLIST -> Lista de comando
+CMD -> comando
+QRS -> queries
+PROCS -> procedures
+CONDLIST -> Lista condições
+COND -> Condições
+key -> coluna
+tabelas -> id
