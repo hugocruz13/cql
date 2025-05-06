@@ -16,7 +16,7 @@ Gramática:
 	CONF → "IMPORT" "TABLE" id "FROM" file ';'
 		 | "EXPORT" "TABLE" id "AS" file ';'
 		 | "DISCARD" "TABLE" id ';'
-		 | "RENAME" "TABLE" id id ';'
+		 | "" "TABLE" id id ';'
 		 | "PRINT" "TABLE" id ';'
 			
 	QRS → "SELECT" SELEC "FROM" id ';' 
