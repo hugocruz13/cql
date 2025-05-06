@@ -5,9 +5,9 @@ lexer = ExpLexer()
 lexer.build()
 
 teste_code = '''-- Isto e um comentário
-IMPORT TABLE tabela1 FROM "dados.csv";
-CREATE TABLE tabela FROM tabela1 JOIN tabela3 USING(id);
-SELECT * FROM tabela WHERE coluna1 = 10 AND coluna2 >= 20 LIMIT 50;
+IMPORT TABLE tabela FROM "dados.csv";
+CREATE TABLE tabela FROM tabela JOIN tabela USING(Id);
+SELECT * FROM tabela WHERE Coluna = 10 AND Coluna >= 20 LIMIT 50;
 '''
 
 lexer.input(teste_code)

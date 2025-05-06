@@ -1,0 +1,179 @@
+Created by PLY version 3.11 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    tk_and
+    tk_as
+    tk_call
+    tk_cmts_block
+    tk_cmts_line
+    tk_create
+    tk_discard
+    tk_do
+    tk_export
+    tk_join
+    tk_key
+    tk_limit
+    tk_nome
+    tk_num
+    tk_operator
+    tk_prcedure
+    tk_print
+    tk_rename
+    tk_reserved
+    tk_select
+    tk_using
+    tk_where
+
+Grammar
+
+Rule 0     S' -> PROG
+Rule 1     PROG -> CMDLIST
+Rule 2     CMDLIST -> CMD
+Rule 3     CMDLIST -> CMD CMDLIST
+Rule 4     CMD -> CONF
+Rule 5     CONF -> tk_import tk_table tk_id tk_from tk_file ;
+
+Terminals, with rules where they appear
+
+;                    : 5
+error                : 
+tk_and               : 
+tk_as                : 
+tk_call              : 
+tk_cmts_block        : 
+tk_cmts_line         : 
+tk_create            : 
+tk_discard           : 
+tk_do                : 
+tk_export            : 
+tk_file              : 5
+tk_from              : 5
+tk_id                : 5
+tk_import            : 5
+tk_join              : 
+tk_key               : 
+tk_limit             : 
+tk_nome              : 
+tk_num               : 
+tk_operator          : 
+tk_prcedure          : 
+tk_print             : 
+tk_rename            : 
+tk_reserved          : 
+tk_select            : 
+tk_table             : 5
+tk_using             : 
+tk_where             : 
+
+Nonterminals, with rules where they appear
+
+CMD                  : 2 3
+CMDLIST              : 1 3
+CONF                 : 4
+PROG                 : 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . PROG
+    (1) PROG -> . CMDLIST
+    (2) CMDLIST -> . CMD
+    (3) CMDLIST -> . CMD CMDLIST
+    (4) CMD -> . CONF
+    (5) CONF -> . tk_import tk_table tk_id tk_from tk_file ;
+
+    tk_import       shift and go to state 5
+
+    PROG                           shift and go to state 1
+    CMDLIST                        shift and go to state 2
+    CMD                            shift and go to state 3
+    CONF                           shift and go to state 4
+
+state 1
+
+    (0) S' -> PROG .
+
+
+
+state 2
+
+    (1) PROG -> CMDLIST .
+
+    $end            reduce using rule 1 (PROG -> CMDLIST .)
+
+
+state 3
+
+    (2) CMDLIST -> CMD .
+    (3) CMDLIST -> CMD . CMDLIST
+    (2) CMDLIST -> . CMD
+    (3) CMDLIST -> . CMD CMDLIST
+    (4) CMD -> . CONF
+    (5) CONF -> . tk_import tk_table tk_id tk_from tk_file ;
+
+    $end            reduce using rule 2 (CMDLIST -> CMD .)
+    tk_import       shift and go to state 5
+
+    CMD                            shift and go to state 3
+    CMDLIST                        shift and go to state 6
+    CONF                           shift and go to state 4
+
+state 4
+
+    (4) CMD -> CONF .
+
+    tk_import       reduce using rule 4 (CMD -> CONF .)
+    $end            reduce using rule 4 (CMD -> CONF .)
+
+
+state 5
+
+    (5) CONF -> tk_import . tk_table tk_id tk_from tk_file ;
+
+    tk_table        shift and go to state 7
+
+
+state 6
+
+    (3) CMDLIST -> CMD CMDLIST .
+
+    $end            reduce using rule 3 (CMDLIST -> CMD CMDLIST .)
+
+
+state 7
+
+    (5) CONF -> tk_import tk_table . tk_id tk_from tk_file ;
+
+    tk_id           shift and go to state 8
+
+
+state 8
+
+    (5) CONF -> tk_import tk_table tk_id . tk_from tk_file ;
+
+    tk_from         shift and go to state 9
+
+
+state 9
+
+    (5) CONF -> tk_import tk_table tk_id tk_from . tk_file ;
+
+    tk_file         shift and go to state 10
+
+
+state 10
+
+    (5) CONF -> tk_import tk_table tk_id tk_from tk_file . ;
+
+    ;               shift and go to state 11
+
+
+state 11
+
+    (5) CONF -> tk_import tk_table tk_id tk_from tk_file ; .
+
+    tk_import       reduce using rule 5 (CONF -> tk_import tk_table tk_id tk_from tk_file ; .)
+    $end            reduce using rule 5 (CONF -> tk_import tk_table tk_id tk_from tk_file ; .)
+

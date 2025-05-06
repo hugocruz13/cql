@@ -31,8 +31,8 @@ class ExpLexer:
 
     # Comentários
     def t_tk_reserved(self, t):
-        r'[A-Z]+'
-        t.type = self.reservedwords.get(t.value,'reserved') # palavra reservada?
+        r'IMPORT|TABLE|EXPORT|DISCARD|RENAME|PRINT|FROM|WHERE|AND|LIMIT|JOIN|AS|CREATE|PROCEDURE|DO|CALL|USING|SELECT'
+        t.type = self.reservedwords.get(t.value,'tk_reserved') # palavra reservada?
         return t
     
     # Comentários
@@ -49,19 +49,19 @@ class ExpLexer:
         r"=|<>|<=|>=|<|>"
         return t
 
-    # Colunas
+    # Colunas 
     def t_tk_key(self, t):
-        r"[a-z]+" 
+        r"[A-Z][a-z]*" 
         return t
   
-    # Id
+    # Nome Tabelas
     def t_tk_id(self, t):
         r"[a-z]+" # Depois tem de incluir _
         return t
     
-    # Nome
+    # Nome Procedure
     def t_tk_nome(self, t):
-        r"[a-z]+" #Falta completar melhor
+        r"[a-z_]+" #Falta completar melhor
         return t
     
     # Num
