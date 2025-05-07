@@ -4,7 +4,8 @@ from lexer import ExpLexer
 lexer = ExpLexer()
 lexer.build()
 
-teste_code = '''"observacoes.csv"'''
+teste_code = '''{--DDASDAS 
+CREATE TABLE completo FROM estacoes JOIN observacoes USING(Id);--}'''
 
 lexer.input(teste_code)
 

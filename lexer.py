@@ -22,7 +22,8 @@ class ExpLexer:
                       'DO' : 'tk_do', 
                       'CALL': 'tk_call',
                       'USING': 'tk_using',
-                      'SELECT': 'tk_select'                      
+                      'SELECT': 'tk_select',
+                      'END':'tk_end'                    
                     }
     tk_reserved = list(set( reservedwords.values())) 
     tokens   = ("tk_cmts_line", "tk_cmts_block", "tk_operator", "tk_key", "tk_id", "tk_file", "tk_num" , "tk_reserved", "tk_numdec") + tuple(tk_reserved)
@@ -31,7 +32,7 @@ class ExpLexer:
 
     # Comentários
     def t_tk_reserved(self, t):
-        r'IMPORT|TABLE|EXPORT|DISCARD|RENAME|PRINT|FROM|WHERE|AND|LIMIT|JOIN|AS|CREATE|PROCEDURE|DO|CALL|USING|SELECT'
+        r'IMPORT|TABLE|EXPORT|DISCARD|RENAME|PRINT|FROM|WHERE|AND|LIMIT|JOIN|AS|CREATE|PROCEDURE|DO|CALL|USING|SELECT|END'
         t.type = self.reservedwords.get(t.value,'tk_reserved') # palavra reservada?
         return t
     
