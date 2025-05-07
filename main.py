@@ -1,12 +1,11 @@
-# arith.py
-from grammar import ExpGrammar
-from exp_eval import ExpEval
+from grammar import Grammar
+from eval import ExpEval
 import sys
 from pprint import PrettyPrinter
 
 pp = PrettyPrinter(sort_dicts=False)
 
-lg = ExpGrammar()
+lg = Grammar()
 lg.build()
 
 

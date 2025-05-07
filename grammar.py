@@ -61,58 +61,72 @@ class Grammar:
     def p_p1(self, p):
         """ PROG  : CMDLIST """
         print('reduce', "PROG  : CMDLIST") 
+        p[0] = p[1]
     
     def p_p2(self, p):
         """ CMDLIST  : CMD """
         print('reduce', "CMDLIST  : CMD") 
+        p[0] = p[1]
     
     def p_p3(self, p):
         """ CMDLIST  : CMD CMDLIST	  """
         print('reduce', "CMDLIST  : CMD CMDLIST")
+        p[0] = {'op': 'seq', 'args': [p[1], p[2]]}
         
     def p_p4(self, p):
         """ CMD  : CONF	  """
         print('reduce', "CMD  : CONF") 
+        p[0] = p[1]
     
     def p_p5(self, p):
         """ CMD  : QRS	  """
         print('reduce', "CMD  : QRS") 
+        p[0] = p[1]
 
     def p_p6(self, p):
         """ CMD  : NEW	  """
-        print('reduce', "CMD  : NEW") 
+        print('reduce', "CMD  : NEW")
+        p[0] = p[1] 
 
     def p_p7(self, p):
         """ CMD  : PROCS	  """
-        print('reduce', "CMD  : PROCS")   
+        print('reduce', "CMD  : PROCS")
+        p[0] = p[1]   
 
     def p_p8(self, p):
         """ CMD  : CMTS	  """
-        print('reduce', "CMD  : CMTS")           
+        print('reduce', "CMD  : CMTS")
+        p[0] = p[1]           
 
     def p_p9(self, p):
         """ CONF  : tk_import tk_table tk_id tk_from tk_file ';'"""
         print('reduce', "CONF  : tk_import tk_table tk_id tk_from tk_file ';'")
+        p[0] = {'op':p[1],'args':[p[3],p[5]]} 
 
     def p_p10(self, p):
         """ CONF  : tk_export tk_table tk_id tk_as tk_file ';'"""
         print('reduce', "CONF  : tk_export tk_table tk_id tk_as tk_file ';'")
+        p[0] = {'op':p[1],'args':[p[3],p[5]]}
 
     def p_p11(self, p):
         """ CONF  : tk_discard tk_table tk_id ';'"""
         print('reduce', "CONF  : tk_discard tk_table tk_id ';'")
+        p[0] = {'op':p[1],'args':p[3]}
 
     def p_p12(self, p):
         """ CONF  : tk_rename tk_table tk_id tk_id ';'"""
         print('reduce', "CONF  : tk_rename tk_table tk_id tk_id ';'")
+        p[0] = {'op':p[1],'args':[p[3],p[4]]}
 
     def p_p13(self, p):
         """ CONF  : tk_print tk_table tk_id ';'"""
         print('reduce', "CONF  : tk_print tk_table tk_id ';'")
+        p[0] = {'op':p[1],'args':p[3]}
         
     def p_p14(self, p):
         """ QRS  : tk_select SELEC tk_from tk_id ';' """
         print('reduce', "QRS  : tk_select SELEC tk_from tk_id ';'")
+        p[0] = {'op':p[1],'args':[p[2], p[4]]}
     
     def p_p15(self, p):
         """ QRS  : tk_select SELEC tk_from tk_id tk_where CONDLIST ';' """
@@ -133,14 +147,17 @@ class Grammar:
     def p_p19(self, p):
         """ SELEC  : COLLIST """
         print('reduce', "SELEC  : COLLIST")
+        p[0] = p[1]
 
     def p_p20(self, p):
         """ COLLIST  : tk_key """
         print('reduce', "COLLIST  : tk_key")
-        
+        p[0] = [p[1]]
+    
     def p_p21(self, p):
         """ COLLIST  : tk_key ',' COLLIST """
         print('reduce', "COLLIST  : tk_key")
+        p[0] = [p[1]] + p[3]
                         
     def p_p22(self, p):
         """ CONDLIST  : COND tk_and CONDLIST """
@@ -170,16 +187,9 @@ class Grammar:
         """ VALOR  : tk_numdec """
         print('reduce', "VALOR  : tk_numdec")      
 
-
-    #   p29:       	     | '<=' 
-	#	p30:             | '>=' 
-	#   p31:    VALOR → num
-	#   p32:          | string
-
-    
-    def p_p29(self, p):
-        """ NEW  : tk_create tk_table tk_id QRS ';'"""
-        print('reduce', "NEW  : tk_create tk_table tk_id QRS ';'")
+    # def p_p29(self, p):
+    #    """ NEW  : tk_create tk_table tk_id QRS ';'"""
+    #    print('reduce', "NEW  : tk_create tk_table tk_id QRS ';'")
         
     def p_p30(self, p):
         """ NEW  : tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using '(' tk_key ')' ';' """

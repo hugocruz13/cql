@@ -35,55 +35,54 @@ Rule 25    OPERADOR -> tk_operator
 Rule 26    VALOR -> tk_num
 Rule 27    VALOR -> tk_string
 Rule 28    VALOR -> tk_numdec
-Rule 29    NEW -> tk_create tk_table tk_id QRS ;
-Rule 30    NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ;
-Rule 31    PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end
-Rule 32    PROCS -> tk_call tk_id ;
-Rule 33    CMTS -> tk_cmts_line
-Rule 34    CMTS -> tk_cmts_block
+Rule 29    NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ;
+Rule 30    PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end
+Rule 31    PROCS -> tk_call tk_id ;
+Rule 32    CMTS -> tk_cmts_line
+Rule 33    CMTS -> tk_cmts_block
 
 Terminals, with rules where they appear
 
-(                    : 30
-)                    : 30
+(                    : 29
+)                    : 29
 *                    : 18
 ,                    : 21
-;                    : 9 10 11 12 13 14 15 16 17 29 30 32
+;                    : 9 10 11 12 13 14 15 16 17 29 31
 error                : 
 tk_and               : 22
 tk_as                : 10
-tk_call              : 32
-tk_cmts_block        : 34
-tk_cmts_line         : 33
-tk_create            : 29 30
+tk_call              : 31
+tk_cmts_block        : 33
+tk_cmts_line         : 32
+tk_create            : 29
 tk_discard           : 11
-tk_do                : 31
-tk_end               : 31
+tk_do                : 30
+tk_end               : 30
 tk_export            : 10
 tk_file              : 9 10
-tk_from              : 9 14 15 16 17 30
-tk_id                : 9 10 11 12 12 13 14 15 16 17 29 30 30 30 31 32
+tk_from              : 9 14 15 16 17 29
+tk_id                : 9 10 11 12 12 13 14 15 16 17 29 29 29 30 31
 tk_import            : 9
-tk_join              : 30
-tk_key               : 20 21 24 30
+tk_join              : 29
+tk_key               : 20 21 24 29
 tk_limit             : 16 17
 tk_num               : 16 17 26
 tk_numdec            : 28
 tk_operator          : 25
 tk_print             : 13
-tk_procedure         : 31
+tk_procedure         : 30
 tk_rename            : 12
 tk_reserved          : 
 tk_select            : 14 15 16 17
 tk_string            : 27
-tk_table             : 9 10 11 12 13 29 30
-tk_using             : 30
+tk_table             : 9 10 11 12 13 29
+tk_using             : 29
 tk_where             : 15 17
 
 Nonterminals, with rules where they appear
 
 CMD                  : 2 3
-CMDLIST              : 1 3 31
+CMDLIST              : 1 3 30
 CMTS                 : 8
 COLLIST              : 19 21
 COND                 : 22 23
@@ -93,7 +92,7 @@ NEW                  : 6
 OPERADOR             : 24
 PROCS                : 7
 PROG                 : 0
-QRS                  : 5 29
+QRS                  : 5
 SELEC                : 14 15 16 17
 VALOR                : 24
 
@@ -119,12 +118,11 @@ state 0
     (15) QRS -> . tk_select SELEC tk_from tk_id tk_where CONDLIST ;
     (16) QRS -> . tk_select SELEC tk_from tk_id tk_limit tk_num ;
     (17) QRS -> . tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num ;
-    (29) NEW -> . tk_create tk_table tk_id QRS ;
-    (30) NEW -> . tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ;
-    (31) PROCS -> . tk_procedure tk_id tk_do CMDLIST tk_end
-    (32) PROCS -> . tk_call tk_id ;
-    (33) CMTS -> . tk_cmts_line
-    (34) CMTS -> . tk_cmts_block
+    (29) NEW -> . tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ;
+    (30) PROCS -> . tk_procedure tk_id tk_do CMDLIST tk_end
+    (31) PROCS -> . tk_call tk_id ;
+    (32) CMTS -> . tk_cmts_line
+    (33) CMTS -> . tk_cmts_block
 
     tk_import       shift and go to state 9
     tk_export       shift and go to state 10
@@ -180,12 +178,11 @@ state 3
     (15) QRS -> . tk_select SELEC tk_from tk_id tk_where CONDLIST ;
     (16) QRS -> . tk_select SELEC tk_from tk_id tk_limit tk_num ;
     (17) QRS -> . tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num ;
-    (29) NEW -> . tk_create tk_table tk_id QRS ;
-    (30) NEW -> . tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ;
-    (31) PROCS -> . tk_procedure tk_id tk_do CMDLIST tk_end
-    (32) PROCS -> . tk_call tk_id ;
-    (33) CMTS -> . tk_cmts_line
-    (34) CMTS -> . tk_cmts_block
+    (29) NEW -> . tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ;
+    (30) PROCS -> . tk_procedure tk_id tk_do CMDLIST tk_end
+    (31) PROCS -> . tk_call tk_id ;
+    (32) CMTS -> . tk_cmts_line
+    (33) CMTS -> . tk_cmts_block
 
     $end            reduce using rule 2 (CMDLIST -> CMD .)
     tk_end          reduce using rule 2 (CMDLIST -> CMD .)
@@ -358,62 +355,61 @@ state 14
 
 state 15
 
-    (29) NEW -> tk_create . tk_table tk_id QRS ;
-    (30) NEW -> tk_create . tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ;
+    (29) NEW -> tk_create . tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ;
 
     tk_table        shift and go to state 30
 
 
 state 16
 
-    (31) PROCS -> tk_procedure . tk_id tk_do CMDLIST tk_end
+    (30) PROCS -> tk_procedure . tk_id tk_do CMDLIST tk_end
 
     tk_id           shift and go to state 31
 
 
 state 17
 
-    (32) PROCS -> tk_call . tk_id ;
+    (31) PROCS -> tk_call . tk_id ;
 
     tk_id           shift and go to state 32
 
 
 state 18
 
-    (33) CMTS -> tk_cmts_line .
+    (32) CMTS -> tk_cmts_line .
 
-    tk_import       reduce using rule 33 (CMTS -> tk_cmts_line .)
-    tk_export       reduce using rule 33 (CMTS -> tk_cmts_line .)
-    tk_discard      reduce using rule 33 (CMTS -> tk_cmts_line .)
-    tk_rename       reduce using rule 33 (CMTS -> tk_cmts_line .)
-    tk_print        reduce using rule 33 (CMTS -> tk_cmts_line .)
-    tk_select       reduce using rule 33 (CMTS -> tk_cmts_line .)
-    tk_create       reduce using rule 33 (CMTS -> tk_cmts_line .)
-    tk_procedure    reduce using rule 33 (CMTS -> tk_cmts_line .)
-    tk_call         reduce using rule 33 (CMTS -> tk_cmts_line .)
-    tk_cmts_line    reduce using rule 33 (CMTS -> tk_cmts_line .)
-    tk_cmts_block   reduce using rule 33 (CMTS -> tk_cmts_line .)
-    $end            reduce using rule 33 (CMTS -> tk_cmts_line .)
-    tk_end          reduce using rule 33 (CMTS -> tk_cmts_line .)
+    tk_import       reduce using rule 32 (CMTS -> tk_cmts_line .)
+    tk_export       reduce using rule 32 (CMTS -> tk_cmts_line .)
+    tk_discard      reduce using rule 32 (CMTS -> tk_cmts_line .)
+    tk_rename       reduce using rule 32 (CMTS -> tk_cmts_line .)
+    tk_print        reduce using rule 32 (CMTS -> tk_cmts_line .)
+    tk_select       reduce using rule 32 (CMTS -> tk_cmts_line .)
+    tk_create       reduce using rule 32 (CMTS -> tk_cmts_line .)
+    tk_procedure    reduce using rule 32 (CMTS -> tk_cmts_line .)
+    tk_call         reduce using rule 32 (CMTS -> tk_cmts_line .)
+    tk_cmts_line    reduce using rule 32 (CMTS -> tk_cmts_line .)
+    tk_cmts_block   reduce using rule 32 (CMTS -> tk_cmts_line .)
+    $end            reduce using rule 32 (CMTS -> tk_cmts_line .)
+    tk_end          reduce using rule 32 (CMTS -> tk_cmts_line .)
 
 
 state 19
 
-    (34) CMTS -> tk_cmts_block .
+    (33) CMTS -> tk_cmts_block .
 
-    tk_import       reduce using rule 34 (CMTS -> tk_cmts_block .)
-    tk_export       reduce using rule 34 (CMTS -> tk_cmts_block .)
-    tk_discard      reduce using rule 34 (CMTS -> tk_cmts_block .)
-    tk_rename       reduce using rule 34 (CMTS -> tk_cmts_block .)
-    tk_print        reduce using rule 34 (CMTS -> tk_cmts_block .)
-    tk_select       reduce using rule 34 (CMTS -> tk_cmts_block .)
-    tk_create       reduce using rule 34 (CMTS -> tk_cmts_block .)
-    tk_procedure    reduce using rule 34 (CMTS -> tk_cmts_block .)
-    tk_call         reduce using rule 34 (CMTS -> tk_cmts_block .)
-    tk_cmts_line    reduce using rule 34 (CMTS -> tk_cmts_block .)
-    tk_cmts_block   reduce using rule 34 (CMTS -> tk_cmts_block .)
-    $end            reduce using rule 34 (CMTS -> tk_cmts_block .)
-    tk_end          reduce using rule 34 (CMTS -> tk_cmts_block .)
+    tk_import       reduce using rule 33 (CMTS -> tk_cmts_block .)
+    tk_export       reduce using rule 33 (CMTS -> tk_cmts_block .)
+    tk_discard      reduce using rule 33 (CMTS -> tk_cmts_block .)
+    tk_rename       reduce using rule 33 (CMTS -> tk_cmts_block .)
+    tk_print        reduce using rule 33 (CMTS -> tk_cmts_block .)
+    tk_select       reduce using rule 33 (CMTS -> tk_cmts_block .)
+    tk_create       reduce using rule 33 (CMTS -> tk_cmts_block .)
+    tk_procedure    reduce using rule 33 (CMTS -> tk_cmts_block .)
+    tk_call         reduce using rule 33 (CMTS -> tk_cmts_block .)
+    tk_cmts_line    reduce using rule 33 (CMTS -> tk_cmts_block .)
+    tk_cmts_block   reduce using rule 33 (CMTS -> tk_cmts_block .)
+    $end            reduce using rule 33 (CMTS -> tk_cmts_block .)
+    tk_end          reduce using rule 33 (CMTS -> tk_cmts_block .)
 
 
 state 20
@@ -494,22 +490,21 @@ state 29
 
 state 30
 
-    (29) NEW -> tk_create tk_table . tk_id QRS ;
-    (30) NEW -> tk_create tk_table . tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ;
+    (29) NEW -> tk_create tk_table . tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ;
 
     tk_id           shift and go to state 40
 
 
 state 31
 
-    (31) PROCS -> tk_procedure tk_id . tk_do CMDLIST tk_end
+    (30) PROCS -> tk_procedure tk_id . tk_do CMDLIST tk_end
 
     tk_do           shift and go to state 41
 
 
 state 32
 
-    (32) PROCS -> tk_call tk_id . ;
+    (31) PROCS -> tk_call tk_id . ;
 
     ;               shift and go to state 42
 
@@ -571,21 +566,14 @@ state 39
 
 state 40
 
-    (29) NEW -> tk_create tk_table tk_id . QRS ;
-    (30) NEW -> tk_create tk_table tk_id . tk_from tk_id tk_join tk_id tk_using ( tk_key ) ;
-    (14) QRS -> . tk_select SELEC tk_from tk_id ;
-    (15) QRS -> . tk_select SELEC tk_from tk_id tk_where CONDLIST ;
-    (16) QRS -> . tk_select SELEC tk_from tk_id tk_limit tk_num ;
-    (17) QRS -> . tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num ;
+    (29) NEW -> tk_create tk_table tk_id . tk_from tk_id tk_join tk_id tk_using ( tk_key ) ;
 
-    tk_from         shift and go to state 51
-    tk_select       shift and go to state 14
+    tk_from         shift and go to state 50
 
-    QRS                            shift and go to state 50
 
 state 41
 
-    (31) PROCS -> tk_procedure tk_id tk_do . CMDLIST tk_end
+    (30) PROCS -> tk_procedure tk_id tk_do . CMDLIST tk_end
     (2) CMDLIST -> . CMD
     (3) CMDLIST -> . CMD CMDLIST
     (4) CMD -> . CONF
@@ -602,12 +590,11 @@ state 41
     (15) QRS -> . tk_select SELEC tk_from tk_id tk_where CONDLIST ;
     (16) QRS -> . tk_select SELEC tk_from tk_id tk_limit tk_num ;
     (17) QRS -> . tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num ;
-    (29) NEW -> . tk_create tk_table tk_id QRS ;
-    (30) NEW -> . tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ;
-    (31) PROCS -> . tk_procedure tk_id tk_do CMDLIST tk_end
-    (32) PROCS -> . tk_call tk_id ;
-    (33) CMTS -> . tk_cmts_line
-    (34) CMTS -> . tk_cmts_block
+    (29) NEW -> . tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ;
+    (30) PROCS -> . tk_procedure tk_id tk_do CMDLIST tk_end
+    (31) PROCS -> . tk_call tk_id ;
+    (32) CMTS -> . tk_cmts_line
+    (33) CMTS -> . tk_cmts_block
 
     tk_import       shift and go to state 9
     tk_export       shift and go to state 10
@@ -621,7 +608,7 @@ state 41
     tk_cmts_line    shift and go to state 18
     tk_cmts_block   shift and go to state 19
 
-    CMDLIST                        shift and go to state 52
+    CMDLIST                        shift and go to state 51
     CMD                            shift and go to state 3
     CONF                           shift and go to state 4
     QRS                            shift and go to state 5
@@ -631,35 +618,35 @@ state 41
 
 state 42
 
-    (32) PROCS -> tk_call tk_id ; .
+    (31) PROCS -> tk_call tk_id ; .
 
-    tk_import       reduce using rule 32 (PROCS -> tk_call tk_id ; .)
-    tk_export       reduce using rule 32 (PROCS -> tk_call tk_id ; .)
-    tk_discard      reduce using rule 32 (PROCS -> tk_call tk_id ; .)
-    tk_rename       reduce using rule 32 (PROCS -> tk_call tk_id ; .)
-    tk_print        reduce using rule 32 (PROCS -> tk_call tk_id ; .)
-    tk_select       reduce using rule 32 (PROCS -> tk_call tk_id ; .)
-    tk_create       reduce using rule 32 (PROCS -> tk_call tk_id ; .)
-    tk_procedure    reduce using rule 32 (PROCS -> tk_call tk_id ; .)
-    tk_call         reduce using rule 32 (PROCS -> tk_call tk_id ; .)
-    tk_cmts_line    reduce using rule 32 (PROCS -> tk_call tk_id ; .)
-    tk_cmts_block   reduce using rule 32 (PROCS -> tk_call tk_id ; .)
-    $end            reduce using rule 32 (PROCS -> tk_call tk_id ; .)
-    tk_end          reduce using rule 32 (PROCS -> tk_call tk_id ; .)
+    tk_import       reduce using rule 31 (PROCS -> tk_call tk_id ; .)
+    tk_export       reduce using rule 31 (PROCS -> tk_call tk_id ; .)
+    tk_discard      reduce using rule 31 (PROCS -> tk_call tk_id ; .)
+    tk_rename       reduce using rule 31 (PROCS -> tk_call tk_id ; .)
+    tk_print        reduce using rule 31 (PROCS -> tk_call tk_id ; .)
+    tk_select       reduce using rule 31 (PROCS -> tk_call tk_id ; .)
+    tk_create       reduce using rule 31 (PROCS -> tk_call tk_id ; .)
+    tk_procedure    reduce using rule 31 (PROCS -> tk_call tk_id ; .)
+    tk_call         reduce using rule 31 (PROCS -> tk_call tk_id ; .)
+    tk_cmts_line    reduce using rule 31 (PROCS -> tk_call tk_id ; .)
+    tk_cmts_block   reduce using rule 31 (PROCS -> tk_call tk_id ; .)
+    $end            reduce using rule 31 (PROCS -> tk_call tk_id ; .)
+    tk_end          reduce using rule 31 (PROCS -> tk_call tk_id ; .)
 
 
 state 43
 
     (9) CONF -> tk_import tk_table tk_id tk_from . tk_file ;
 
-    tk_file         shift and go to state 53
+    tk_file         shift and go to state 52
 
 
 state 44
 
     (10) CONF -> tk_export tk_table tk_id tk_as . tk_file ;
 
-    tk_file         shift and go to state 54
+    tk_file         shift and go to state 53
 
 
 state 45
@@ -685,7 +672,7 @@ state 46
 
     (12) CONF -> tk_rename tk_table tk_id tk_id . ;
 
-    ;               shift and go to state 55
+    ;               shift and go to state 54
 
 
 state 47
@@ -714,9 +701,9 @@ state 48
     (16) QRS -> tk_select SELEC tk_from tk_id . tk_limit tk_num ;
     (17) QRS -> tk_select SELEC tk_from tk_id . tk_where CONDLIST tk_limit tk_num ;
 
-    ;               shift and go to state 56
-    tk_where        shift and go to state 57
-    tk_limit        shift and go to state 58
+    ;               shift and go to state 55
+    tk_where        shift and go to state 56
+    tk_limit        shift and go to state 57
 
 
 state 49
@@ -728,40 +715,33 @@ state 49
 
 state 50
 
-    (29) NEW -> tk_create tk_table tk_id QRS . ;
+    (29) NEW -> tk_create tk_table tk_id tk_from . tk_id tk_join tk_id tk_using ( tk_key ) ;
 
-    ;               shift and go to state 59
+    tk_id           shift and go to state 58
 
 
 state 51
 
-    (30) NEW -> tk_create tk_table tk_id tk_from . tk_id tk_join tk_id tk_using ( tk_key ) ;
+    (30) PROCS -> tk_procedure tk_id tk_do CMDLIST . tk_end
 
-    tk_id           shift and go to state 60
+    tk_end          shift and go to state 59
 
 
 state 52
 
-    (31) PROCS -> tk_procedure tk_id tk_do CMDLIST . tk_end
+    (9) CONF -> tk_import tk_table tk_id tk_from tk_file . ;
 
-    tk_end          shift and go to state 61
+    ;               shift and go to state 60
 
 
 state 53
 
-    (9) CONF -> tk_import tk_table tk_id tk_from tk_file . ;
+    (10) CONF -> tk_export tk_table tk_id tk_as tk_file . ;
 
-    ;               shift and go to state 62
+    ;               shift and go to state 61
 
 
 state 54
-
-    (10) CONF -> tk_export tk_table tk_id tk_as tk_file . ;
-
-    ;               shift and go to state 63
-
-
-state 55
 
     (12) CONF -> tk_rename tk_table tk_id tk_id ; .
 
@@ -780,7 +760,7 @@ state 55
     tk_end          reduce using rule 12 (CONF -> tk_rename tk_table tk_id tk_id ; .)
 
 
-state 56
+state 55
 
     (14) QRS -> tk_select SELEC tk_from tk_id ; .
 
@@ -797,10 +777,9 @@ state 56
     tk_cmts_block   reduce using rule 14 (QRS -> tk_select SELEC tk_from tk_id ; .)
     $end            reduce using rule 14 (QRS -> tk_select SELEC tk_from tk_id ; .)
     tk_end          reduce using rule 14 (QRS -> tk_select SELEC tk_from tk_id ; .)
-    ;               reduce using rule 14 (QRS -> tk_select SELEC tk_from tk_id ; .)
 
 
-state 57
+state 56
 
     (15) QRS -> tk_select SELEC tk_from tk_id tk_where . CONDLIST ;
     (17) QRS -> tk_select SELEC tk_from tk_id tk_where . CONDLIST tk_limit tk_num ;
@@ -808,64 +787,45 @@ state 57
     (23) CONDLIST -> . COND
     (24) COND -> . tk_key OPERADOR VALOR
 
-    tk_key          shift and go to state 66
+    tk_key          shift and go to state 64
 
-    CONDLIST                       shift and go to state 64
-    COND                           shift and go to state 65
+    CONDLIST                       shift and go to state 62
+    COND                           shift and go to state 63
 
-state 58
+state 57
 
     (16) QRS -> tk_select SELEC tk_from tk_id tk_limit . tk_num ;
 
-    tk_num          shift and go to state 67
+    tk_num          shift and go to state 65
+
+
+state 58
+
+    (29) NEW -> tk_create tk_table tk_id tk_from tk_id . tk_join tk_id tk_using ( tk_key ) ;
+
+    tk_join         shift and go to state 66
 
 
 state 59
 
-    (29) NEW -> tk_create tk_table tk_id QRS ; .
+    (30) PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .
 
-    tk_import       reduce using rule 29 (NEW -> tk_create tk_table tk_id QRS ; .)
-    tk_export       reduce using rule 29 (NEW -> tk_create tk_table tk_id QRS ; .)
-    tk_discard      reduce using rule 29 (NEW -> tk_create tk_table tk_id QRS ; .)
-    tk_rename       reduce using rule 29 (NEW -> tk_create tk_table tk_id QRS ; .)
-    tk_print        reduce using rule 29 (NEW -> tk_create tk_table tk_id QRS ; .)
-    tk_select       reduce using rule 29 (NEW -> tk_create tk_table tk_id QRS ; .)
-    tk_create       reduce using rule 29 (NEW -> tk_create tk_table tk_id QRS ; .)
-    tk_procedure    reduce using rule 29 (NEW -> tk_create tk_table tk_id QRS ; .)
-    tk_call         reduce using rule 29 (NEW -> tk_create tk_table tk_id QRS ; .)
-    tk_cmts_line    reduce using rule 29 (NEW -> tk_create tk_table tk_id QRS ; .)
-    tk_cmts_block   reduce using rule 29 (NEW -> tk_create tk_table tk_id QRS ; .)
-    $end            reduce using rule 29 (NEW -> tk_create tk_table tk_id QRS ; .)
-    tk_end          reduce using rule 29 (NEW -> tk_create tk_table tk_id QRS ; .)
+    tk_import       reduce using rule 30 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
+    tk_export       reduce using rule 30 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
+    tk_discard      reduce using rule 30 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
+    tk_rename       reduce using rule 30 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
+    tk_print        reduce using rule 30 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
+    tk_select       reduce using rule 30 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
+    tk_create       reduce using rule 30 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
+    tk_procedure    reduce using rule 30 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
+    tk_call         reduce using rule 30 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
+    tk_cmts_line    reduce using rule 30 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
+    tk_cmts_block   reduce using rule 30 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
+    $end            reduce using rule 30 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
+    tk_end          reduce using rule 30 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
 
 
 state 60
-
-    (30) NEW -> tk_create tk_table tk_id tk_from tk_id . tk_join tk_id tk_using ( tk_key ) ;
-
-    tk_join         shift and go to state 68
-
-
-state 61
-
-    (31) PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .
-
-    tk_import       reduce using rule 31 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
-    tk_export       reduce using rule 31 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
-    tk_discard      reduce using rule 31 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
-    tk_rename       reduce using rule 31 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
-    tk_print        reduce using rule 31 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
-    tk_select       reduce using rule 31 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
-    tk_create       reduce using rule 31 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
-    tk_procedure    reduce using rule 31 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
-    tk_call         reduce using rule 31 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
-    tk_cmts_line    reduce using rule 31 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
-    tk_cmts_block   reduce using rule 31 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
-    $end            reduce using rule 31 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
-    tk_end          reduce using rule 31 (PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end .)
-
-
-state 62
 
     (9) CONF -> tk_import tk_table tk_id tk_from tk_file ; .
 
@@ -884,7 +844,7 @@ state 62
     tk_end          reduce using rule 9 (CONF -> tk_import tk_table tk_id tk_from tk_file ; .)
 
 
-state 63
+state 61
 
     (10) CONF -> tk_export tk_table tk_id tk_as tk_file ; .
 
@@ -903,49 +863,49 @@ state 63
     tk_end          reduce using rule 10 (CONF -> tk_export tk_table tk_id tk_as tk_file ; .)
 
 
-state 64
+state 62
 
     (15) QRS -> tk_select SELEC tk_from tk_id tk_where CONDLIST . ;
     (17) QRS -> tk_select SELEC tk_from tk_id tk_where CONDLIST . tk_limit tk_num ;
 
-    ;               shift and go to state 69
-    tk_limit        shift and go to state 70
+    ;               shift and go to state 67
+    tk_limit        shift and go to state 68
 
 
-state 65
+state 63
 
     (22) CONDLIST -> COND . tk_and CONDLIST
     (23) CONDLIST -> COND .
 
-    tk_and          shift and go to state 71
+    tk_and          shift and go to state 69
     ;               reduce using rule 23 (CONDLIST -> COND .)
     tk_limit        reduce using rule 23 (CONDLIST -> COND .)
 
 
-state 66
+state 64
 
     (24) COND -> tk_key . OPERADOR VALOR
     (25) OPERADOR -> . tk_operator
 
-    tk_operator     shift and go to state 73
+    tk_operator     shift and go to state 71
 
-    OPERADOR                       shift and go to state 72
+    OPERADOR                       shift and go to state 70
 
-state 67
+state 65
 
     (16) QRS -> tk_select SELEC tk_from tk_id tk_limit tk_num . ;
 
-    ;               shift and go to state 74
+    ;               shift and go to state 72
 
 
-state 68
+state 66
 
-    (30) NEW -> tk_create tk_table tk_id tk_from tk_id tk_join . tk_id tk_using ( tk_key ) ;
+    (29) NEW -> tk_create tk_table tk_id tk_from tk_id tk_join . tk_id tk_using ( tk_key ) ;
 
-    tk_id           shift and go to state 75
+    tk_id           shift and go to state 73
 
 
-state 69
+state 67
 
     (15) QRS -> tk_select SELEC tk_from tk_id tk_where CONDLIST ; .
 
@@ -962,42 +922,41 @@ state 69
     tk_cmts_block   reduce using rule 15 (QRS -> tk_select SELEC tk_from tk_id tk_where CONDLIST ; .)
     $end            reduce using rule 15 (QRS -> tk_select SELEC tk_from tk_id tk_where CONDLIST ; .)
     tk_end          reduce using rule 15 (QRS -> tk_select SELEC tk_from tk_id tk_where CONDLIST ; .)
-    ;               reduce using rule 15 (QRS -> tk_select SELEC tk_from tk_id tk_where CONDLIST ; .)
 
 
-state 70
+state 68
 
     (17) QRS -> tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit . tk_num ;
 
-    tk_num          shift and go to state 76
+    tk_num          shift and go to state 74
 
 
-state 71
+state 69
 
     (22) CONDLIST -> COND tk_and . CONDLIST
     (22) CONDLIST -> . COND tk_and CONDLIST
     (23) CONDLIST -> . COND
     (24) COND -> . tk_key OPERADOR VALOR
 
-    tk_key          shift and go to state 66
+    tk_key          shift and go to state 64
 
-    COND                           shift and go to state 65
-    CONDLIST                       shift and go to state 77
+    COND                           shift and go to state 63
+    CONDLIST                       shift and go to state 75
 
-state 72
+state 70
 
     (24) COND -> tk_key OPERADOR . VALOR
     (26) VALOR -> . tk_num
     (27) VALOR -> . tk_string
     (28) VALOR -> . tk_numdec
 
-    tk_num          shift and go to state 79
-    tk_string       shift and go to state 80
-    tk_numdec       shift and go to state 81
+    tk_num          shift and go to state 77
+    tk_string       shift and go to state 78
+    tk_numdec       shift and go to state 79
 
-    VALOR                          shift and go to state 78
+    VALOR                          shift and go to state 76
 
-state 73
+state 71
 
     (25) OPERADOR -> tk_operator .
 
@@ -1006,7 +965,7 @@ state 73
     tk_numdec       reduce using rule 25 (OPERADOR -> tk_operator .)
 
 
-state 74
+state 72
 
     (16) QRS -> tk_select SELEC tk_from tk_id tk_limit tk_num ; .
 
@@ -1023,24 +982,23 @@ state 74
     tk_cmts_block   reduce using rule 16 (QRS -> tk_select SELEC tk_from tk_id tk_limit tk_num ; .)
     $end            reduce using rule 16 (QRS -> tk_select SELEC tk_from tk_id tk_limit tk_num ; .)
     tk_end          reduce using rule 16 (QRS -> tk_select SELEC tk_from tk_id tk_limit tk_num ; .)
-    ;               reduce using rule 16 (QRS -> tk_select SELEC tk_from tk_id tk_limit tk_num ; .)
 
 
-state 75
+state 73
 
-    (30) NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id . tk_using ( tk_key ) ;
+    (29) NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id . tk_using ( tk_key ) ;
 
-    tk_using        shift and go to state 82
+    tk_using        shift and go to state 80
 
 
-state 76
+state 74
 
     (17) QRS -> tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num . ;
 
-    ;               shift and go to state 83
+    ;               shift and go to state 81
 
 
-state 77
+state 75
 
     (22) CONDLIST -> COND tk_and CONDLIST .
 
@@ -1048,7 +1006,7 @@ state 77
     tk_limit        reduce using rule 22 (CONDLIST -> COND tk_and CONDLIST .)
 
 
-state 78
+state 76
 
     (24) COND -> tk_key OPERADOR VALOR .
 
@@ -1057,7 +1015,7 @@ state 78
     tk_limit        reduce using rule 24 (COND -> tk_key OPERADOR VALOR .)
 
 
-state 79
+state 77
 
     (26) VALOR -> tk_num .
 
@@ -1066,7 +1024,7 @@ state 79
     tk_limit        reduce using rule 26 (VALOR -> tk_num .)
 
 
-state 80
+state 78
 
     (27) VALOR -> tk_string .
 
@@ -1075,7 +1033,7 @@ state 80
     tk_limit        reduce using rule 27 (VALOR -> tk_string .)
 
 
-state 81
+state 79
 
     (28) VALOR -> tk_numdec .
 
@@ -1084,14 +1042,14 @@ state 81
     tk_limit        reduce using rule 28 (VALOR -> tk_numdec .)
 
 
-state 82
+state 80
 
-    (30) NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using . ( tk_key ) ;
+    (29) NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using . ( tk_key ) ;
 
-    (               shift and go to state 84
+    (               shift and go to state 82
 
 
-state 83
+state 81
 
     (17) QRS -> tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num ; .
 
@@ -1108,45 +1066,44 @@ state 83
     tk_cmts_block   reduce using rule 17 (QRS -> tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num ; .)
     $end            reduce using rule 17 (QRS -> tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num ; .)
     tk_end          reduce using rule 17 (QRS -> tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num ; .)
-    ;               reduce using rule 17 (QRS -> tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num ; .)
+
+
+state 82
+
+    (29) NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( . tk_key ) ;
+
+    tk_key          shift and go to state 83
+
+
+state 83
+
+    (29) NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key . ) ;
+
+    )               shift and go to state 84
 
 
 state 84
 
-    (30) NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( . tk_key ) ;
+    (29) NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) . ;
 
-    tk_key          shift and go to state 85
+    ;               shift and go to state 85
 
 
 state 85
 
-    (30) NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key . ) ;
+    (29) NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .
 
-    )               shift and go to state 86
-
-
-state 86
-
-    (30) NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) . ;
-
-    ;               shift and go to state 87
-
-
-state 87
-
-    (30) NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .
-
-    tk_import       reduce using rule 30 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
-    tk_export       reduce using rule 30 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
-    tk_discard      reduce using rule 30 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
-    tk_rename       reduce using rule 30 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
-    tk_print        reduce using rule 30 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
-    tk_select       reduce using rule 30 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
-    tk_create       reduce using rule 30 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
-    tk_procedure    reduce using rule 30 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
-    tk_call         reduce using rule 30 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
-    tk_cmts_line    reduce using rule 30 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
-    tk_cmts_block   reduce using rule 30 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
-    $end            reduce using rule 30 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
-    tk_end          reduce using rule 30 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
+    tk_import       reduce using rule 29 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
+    tk_export       reduce using rule 29 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
+    tk_discard      reduce using rule 29 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
+    tk_rename       reduce using rule 29 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
+    tk_print        reduce using rule 29 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
+    tk_select       reduce using rule 29 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
+    tk_create       reduce using rule 29 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
+    tk_procedure    reduce using rule 29 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
+    tk_call         reduce using rule 29 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
+    tk_cmts_line    reduce using rule 29 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
+    tk_cmts_block   reduce using rule 29 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
+    $end            reduce using rule 29 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
+    tk_end          reduce using rule 29 (NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ; .)
 
