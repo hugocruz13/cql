@@ -6,9 +6,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = "tk_and tk_as tk_call tk_cmts_block tk_cmts_line tk_create tk_discard tk_do tk_export tk_file tk_from tk_id tk_import tk_join tk_key tk_limit tk_nome tk_num tk_operator tk_prcedure tk_print tk_rename tk_reserved tk_select tk_table tk_using tk_wherePROG  : CMDLIST CMDLIST  : CMD CMDLIST  : CMD CMDLIST   CMD  : CONF      CONF  : tk_import tk_table tk_id tk_from tk_file ';'"
+_lr_signature = "tk_and tk_as tk_call tk_cmts_block tk_cmts_line tk_create tk_discard tk_do tk_end tk_export tk_file tk_from tk_id tk_import tk_join tk_key tk_limit tk_num tk_numdec tk_operator tk_print tk_procedure tk_rename tk_reserved tk_select tk_string tk_table tk_using tk_where PROG  : CMDLIST  CMDLIST  : CMD  CMDLIST  : CMD CMDLIST\t   CMD  : CONF\t   CMD  : QRS\t   CMD  : NEW\t   CMD  : PROCS\t   CMD  : CMTS\t   CONF  : tk_import tk_table tk_id tk_from tk_file ';' CONF  : tk_export tk_table tk_id tk_as tk_file ';' CONF  : tk_discard tk_table tk_id ';' CONF  : tk_rename tk_table tk_id tk_id ';' CONF  : tk_print tk_table tk_id ';' QRS  : tk_select SELEC tk_from tk_id ';'  QRS  : tk_select SELEC tk_from tk_id tk_where CONDLIST ';'  QRS  : tk_select SELEC tk_from tk_id tk_limit tk_num ';'  QRS  : tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num ';'  SELEC  : '*'  SELEC  : COLLIST  COLLIST  : tk_key  COLLIST  : tk_key ',' COLLIST  CONDLIST  : COND tk_and CONDLIST  CONDLIST  : COND  COND  : tk_key OPERADOR VALOR  OPERADOR  : tk_operator  VALOR  : tk_num  VALOR  : tk_string  VALOR  : tk_numdec  NEW  : tk_create tk_table tk_id QRS ';' NEW  : tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using '(' tk_key ')' ';'  PROCS  : tk_procedure tk_id tk_do CMDLIST tk_end PROCS  : tk_call tk_id ';'  CMTS  : tk_cmts_line  CMTS  : tk_cmts_block "
     
-_lr_action_items = {'tk_import':([0,3,4,11,],[5,5,-4,-5,]),'$end':([1,2,3,4,6,11,],[0,-1,-2,-4,-3,-5,]),'tk_table':([5,],[7,]),'tk_id':([7,],[8,]),'tk_from':([8,],[9,]),'tk_file':([9,],[10,]),';':([10,],[11,]),}
+_lr_action_items = {'tk_import':([0,3,4,5,6,7,8,18,19,41,42,45,47,55,56,59,61,62,63,69,74,83,87,],[9,9,-4,-5,-6,-7,-8,-33,-34,9,-32,-11,-13,-12,-14,-29,-31,-9,-10,-15,-16,-17,-30,]),'tk_export':([0,3,4,5,6,7,8,18,19,41,42,45,47,55,56,59,61,62,63,69,74,83,87,],[10,10,-4,-5,-6,-7,-8,-33,-34,10,-32,-11,-13,-12,-14,-29,-31,-9,-10,-15,-16,-17,-30,]),'tk_discard':([0,3,4,5,6,7,8,18,19,41,42,45,47,55,56,59,61,62,63,69,74,83,87,],[11,11,-4,-5,-6,-7,-8,-33,-34,11,-32,-11,-13,-12,-14,-29,-31,-9,-10,-15,-16,-17,-30,]),'tk_rename':([0,3,4,5,6,7,8,18,19,41,42,45,47,55,56,59,61,62,63,69,74,83,87,],[12,12,-4,-5,-6,-7,-8,-33,-34,12,-32,-11,-13,-12,-14,-29,-31,-9,-10,-15,-16,-17,-30,]),'tk_print':([0,3,4,5,6,7,8,18,19,41,42,45,47,55,56,59,61,62,63,69,74,83,87,],[13,13,-4,-5,-6,-7,-8,-33,-34,13,-32,-11,-13,-12,-14,-29,-31,-9,-10,-15,-16,-17,-30,]),'tk_select':([0,3,4,5,6,7,8,18,19,40,41,42,45,47,55,56,59,61,62,63,69,74,83,87,],[14,14,-4,-5,-6,-7,-8,-33,-34,14,14,-32,-11,-13,-12,-14,-29,-31,-9,-10,-15,-16,-17,-30,]),'tk_create':([0,3,4,5,6,7,8,18,19,41,42,45,47,55,56,59,61,62,63,69,74,83,87,],[15,15,-4,-5,-6,-7,-8,-33,-34,15,-32,-11,-13,-12,-14,-29,-31,-9,-10,-15,-16,-17,-30,]),'tk_procedure':([0,3,4,5,6,7,8,18,19,41,42,45,47,55,56,59,61,62,63,69,74,83,87,],[16,16,-4,-5,-6,-7,-8,-33,-34,16,-32,-11,-13,-12,-14,-29,-31,-9,-10,-15,-16,-17,-30,]),'tk_call':([0,3,4,5,6,7,8,18,19,41,42,45,47,55,56,59,61,62,63,69,74,83,87,],[17,17,-4,-5,-6,-7,-8,-33,-34,17,-32,-11,-13,-12,-14,-29,-31,-9,-10,-15,-16,-17,-30,]),'tk_cmts_line':([0,3,4,5,6,7,8,18,19,41,42,45,47,55,56,59,61,62,63,69,74,83,87,],[18,18,-4,-5,-6,-7,-8,-33,-34,18,-32,-11,-13,-12,-14,-29,-31,-9,-10,-15,-16,-17,-30,]),'tk_cmts_block':([0,3,4,5,6,7,8,18,19,41,42,45,47,55,56,59,61,62,63,69,74,83,87,],[19,19,-4,-5,-6,-7,-8,-33,-34,19,-32,-11,-13,-12,-14,-29,-31,-9,-10,-15,-16,-17,-30,]),'$end':([1,2,3,4,5,6,7,8,18,19,20,42,45,47,55,56,59,61,62,63,69,74,83,87,],[0,-1,-2,-4,-5,-6,-7,-8,-33,-34,-3,-32,-11,-13,-12,-14,-29,-31,-9,-10,-15,-16,-17,-30,]),'tk_end':([3,4,5,6,7,8,18,19,20,42,45,47,52,55,56,59,61,62,63,69,74,83,87,],[-2,-4,-5,-6,-7,-8,-33,-34,-3,-32,-11,-13,61,-12,-14,-29,-31,-9,-10,-15,-16,-17,-30,]),'tk_table':([9,10,11,12,13,15,],[21,22,23,24,25,30,]),'*':([14,],[27,]),'tk_key':([14,39,57,71,84,],[29,29,66,66,85,]),'tk_id':([16,17,21,22,23,24,25,30,36,38,51,68,],[31,32,33,34,35,36,37,40,46,48,60,75,]),'tk_from':([26,27,28,29,33,40,49,],[38,-18,-19,-20,43,51,-21,]),',':([29,],[39,]),'tk_do':([31,],[41,]),';':([32,35,37,46,48,50,53,54,56,64,65,67,69,74,76,77,78,79,80,81,83,86,],[42,45,47,55,56,59,62,63,-14,69,-23,74,-15,-16,83,-22,-24,-26,-27,-28,-17,87,]),'tk_as':([34,],[44,]),'tk_file':([43,44,],[53,54,]),'tk_where':([48,],[57,]),'tk_limit':([48,64,65,77,78,79,80,81,],[58,70,-23,-22,-24,-26,-27,-28,]),'tk_num':([58,70,72,73,],[67,76,79,-25,]),'tk_join':([60,],[68,]),'tk_and':([65,78,79,80,81,],[71,-24,-26,-27,-28,]),'tk_operator':([66,],[73,]),'tk_string':([72,73,],[80,-25,]),'tk_numdec':([72,73,],[81,-25,]),'tk_using':([75,],[82,]),'(':([82,],[84,]),')':([85,],[86,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -17,7 +17,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'PROG':([0,],[1,]),'CMDLIST':([0,3,],[2,6,]),'CMD':([0,3,],[3,3,]),'CONF':([0,3,],[4,4,]),}
+_lr_goto_items = {'PROG':([0,],[1,]),'CMDLIST':([0,3,41,],[2,20,52,]),'CMD':([0,3,41,],[3,3,3,]),'CONF':([0,3,41,],[4,4,4,]),'QRS':([0,3,40,41,],[5,5,50,5,]),'NEW':([0,3,41,],[6,6,6,]),'PROCS':([0,3,41,],[7,7,7,]),'CMTS':([0,3,41,],[8,8,8,]),'SELEC':([14,],[26,]),'COLLIST':([14,39,],[28,49,]),'CONDLIST':([57,71,],[64,77,]),'COND':([57,71,],[65,65,]),'OPERADOR':([66,],[72,]),'VALOR':([72,],[78,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -27,9 +27,38 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> PROG","S'",1,None,None,None),
-  ('PROG -> CMDLIST','PROG',1,'p_p1','grammar.py',66),
-  ('CMDLIST -> CMD','CMDLIST',1,'p_p2','grammar.py',70),
-  ('CMDLIST -> CMD CMDLIST','CMDLIST',2,'p_p3','grammar.py',74),
-  ('CMD -> CONF','CMD',1,'p_p4','grammar.py',78),
-  ('CONF -> tk_import tk_table tk_id tk_from tk_file ;','CONF',6,'p_p9','grammar.py',82),
+  ('PROG -> CMDLIST','PROG',1,'p_p1','grammar.py',62),
+  ('CMDLIST -> CMD','CMDLIST',1,'p_p2','grammar.py',66),
+  ('CMDLIST -> CMD CMDLIST','CMDLIST',2,'p_p3','grammar.py',70),
+  ('CMD -> CONF','CMD',1,'p_p4','grammar.py',74),
+  ('CMD -> QRS','CMD',1,'p_p5','grammar.py',78),
+  ('CMD -> NEW','CMD',1,'p_p6','grammar.py',82),
+  ('CMD -> PROCS','CMD',1,'p_p7','grammar.py',86),
+  ('CMD -> CMTS','CMD',1,'p_p8','grammar.py',90),
+  ('CONF -> tk_import tk_table tk_id tk_from tk_file ;','CONF',6,'p_p9','grammar.py',94),
+  ('CONF -> tk_export tk_table tk_id tk_as tk_file ;','CONF',6,'p_p10','grammar.py',98),
+  ('CONF -> tk_discard tk_table tk_id ;','CONF',4,'p_p11','grammar.py',102),
+  ('CONF -> tk_rename tk_table tk_id tk_id ;','CONF',5,'p_p12','grammar.py',106),
+  ('CONF -> tk_print tk_table tk_id ;','CONF',4,'p_p13','grammar.py',110),
+  ('QRS -> tk_select SELEC tk_from tk_id ;','QRS',5,'p_p14','grammar.py',114),
+  ('QRS -> tk_select SELEC tk_from tk_id tk_where CONDLIST ;','QRS',7,'p_p15','grammar.py',118),
+  ('QRS -> tk_select SELEC tk_from tk_id tk_limit tk_num ;','QRS',7,'p_p16','grammar.py',122),
+  ('QRS -> tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num ;','QRS',9,'p_p17','grammar.py',126),
+  ('SELEC -> *','SELEC',1,'p_p18','grammar.py',130),
+  ('SELEC -> COLLIST','SELEC',1,'p_p19','grammar.py',134),
+  ('COLLIST -> tk_key','COLLIST',1,'p_p20','grammar.py',138),
+  ('COLLIST -> tk_key , COLLIST','COLLIST',3,'p_p21','grammar.py',142),
+  ('CONDLIST -> COND tk_and CONDLIST','CONDLIST',3,'p_p22','grammar.py',146),
+  ('CONDLIST -> COND','CONDLIST',1,'p_p23','grammar.py',150),
+  ('COND -> tk_key OPERADOR VALOR','COND',3,'p_p24','grammar.py',154),
+  ('OPERADOR -> tk_operator','OPERADOR',1,'p_p25','grammar.py',158),
+  ('VALOR -> tk_num','VALOR',1,'p_p26','grammar.py',162),
+  ('VALOR -> tk_string','VALOR',1,'p_p27','grammar.py',166),
+  ('VALOR -> tk_numdec','VALOR',1,'p_p28','grammar.py',170),
+  ('NEW -> tk_create tk_table tk_id QRS ;','NEW',5,'p_p29','grammar.py',181),
+  ('NEW -> tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using ( tk_key ) ;','NEW',12,'p_p30','grammar.py',185),
+  ('PROCS -> tk_procedure tk_id tk_do CMDLIST tk_end','PROCS',5,'p_p31','grammar.py',189),
+  ('PROCS -> tk_call tk_id ;','PROCS',3,'p_p32','grammar.py',193),
+  ('CMTS -> tk_cmts_line','CMTS',1,'p_p33','grammar.py',197),
+  ('CMTS -> tk_cmts_block','CMTS',1,'p_p34','grammar.py',201),
 ]

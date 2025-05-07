@@ -44,21 +44,17 @@ class Grammar:
 	#   p21:            | key, COLLIST
 	#   p22:    CONDLIST → COND "AND" CONDLIST
     #   p23:             | COND	   
-	#   p24:    COND → key Operador VALOR 
-	#   p25:    Operador → '=' 
-	#   p26:             | '<>' 
-	#   p27:  		     | '<' 
-	#	p28:      	     | '>' 
-	#   p29:       	     | '<=' 
-	#	p30:             | '>=' 
-	#   p31:    VALOR → num
-	#   p32:          | string
-	#   p33:    NEW → "CREATE" "TABLE" id QRS ';'
-	#	p34:        | "CREATE" "TABLE" id "FROM" id "JOIN" id "USING"'('key')' ';'
-	#   p35:    PROCS → "PROCEDURE" nome "DO" CMDLIST "END"
-	#   p36:          | "CALL" nome ';'
-	#   p37:    CMTS → '--' ate ao fim
-	#   p38:         | '{-' texto_varias_linhas '-}'
+	#   p24:    COND → key OPERADOR VALOR 
+	#   p25:    OPERADOR → operador
+	#   p26:    VALOR → num
+	#   p27:          | string
+    #   p28:          | numdec
+	#   p29:    NEW → "CREATE" "TABLE" id QRS ';'
+	#	p30:        | "CREATE" "TABLE" id "FROM" id "JOIN" id "USING"'('key')' ';'
+	#   p31:    PROCS → "PROCEDURE" nome "DO" CMDLIST "END"
+	#   p32:          | "CALL" nome ';'
+	#   p33:    CMTS → '--' ate ao fim
+	#   p34:         | '{-' texto_varias_linhas '-}'
     # -----------------------------
 
 
@@ -77,28 +73,133 @@ class Grammar:
     def p_p4(self, p):
         """ CMD  : CONF	  """
         print('reduce', "CMD  : CONF") 
+    
+    def p_p5(self, p):
+        """ CMD  : QRS	  """
+        print('reduce', "CMD  : QRS") 
+
+    def p_p6(self, p):
+        """ CMD  : NEW	  """
+        print('reduce', "CMD  : NEW") 
+
+    def p_p7(self, p):
+        """ CMD  : PROCS	  """
+        print('reduce', "CMD  : PROCS")   
+
+    def p_p8(self, p):
+        """ CMD  : CMTS	  """
+        print('reduce', "CMD  : CMTS")           
 
     def p_p9(self, p):
         """ CONF  : tk_import tk_table tk_id tk_from tk_file ';'"""
-        file_path = p[5][1:-1] if p[5].startswith('"') and p[5].endswith('"') else p[5]
-    
-        # Estrutura de dados mais organizada
-        p[0] = {
-            'type': 'import_statement',
-            'command': {
-                'action': p[1],    # 'IMPORT'
-                'target': p[2],    # 'TABLE'
-            },
-            'table': p[3],         # nome da tabela
-            'source': file_path,   # caminho do arquivo sem aspas
-            'position': {
-                'line': p.lineno(1)  # linha onde começou a regra
-            }
-        }
-    
-        # Formatação de saída mais limpa
-        print(f"{p[1]} {p[2]} {p[3]} {p[4]} {file_path};")
+        print('reduce', "CONF  : tk_import tk_table tk_id tk_from tk_file ';'")
 
+    def p_p10(self, p):
+        """ CONF  : tk_export tk_table tk_id tk_as tk_file ';'"""
+        print('reduce', "CONF  : tk_export tk_table tk_id tk_as tk_file ';'")
+
+    def p_p11(self, p):
+        """ CONF  : tk_discard tk_table tk_id ';'"""
+        print('reduce', "CONF  : tk_discard tk_table tk_id ';'")
+
+    def p_p12(self, p):
+        """ CONF  : tk_rename tk_table tk_id tk_id ';'"""
+        print('reduce', "CONF  : tk_rename tk_table tk_id tk_id ';'")
+
+    def p_p13(self, p):
+        """ CONF  : tk_print tk_table tk_id ';'"""
+        print('reduce', "CONF  : tk_print tk_table tk_id ';'")
+        
+    def p_p14(self, p):
+        """ QRS  : tk_select SELEC tk_from tk_id ';' """
+        print('reduce', "QRS  : tk_select SELEC tk_from tk_id ';'")
+    
+    def p_p15(self, p):
+        """ QRS  : tk_select SELEC tk_from tk_id tk_where CONDLIST ';' """
+        print('reduce', "QRS  : tk_select SELEC tk_from tk_id tk_where CONDLIST ';'")
+
+    def p_p16(self, p):
+        """ QRS  : tk_select SELEC tk_from tk_id tk_limit tk_num ';' """
+        print('reduce', "QRS  : tk_select SELEC tk_from tk_id tk_limit tk_num ';'")
+
+    def p_p17(self, p):
+        """ QRS  : tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num ';' """
+        print('reduce', "QRS  : tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num ';'")
+
+    def p_p18(self, p):
+        """ SELEC  : '*' """
+        print('reduce', "SELEC  : '*'")
+
+    def p_p19(self, p):
+        """ SELEC  : COLLIST """
+        print('reduce', "SELEC  : COLLIST")
+
+    def p_p20(self, p):
+        """ COLLIST  : tk_key """
+        print('reduce', "COLLIST  : tk_key")
+        
+    def p_p21(self, p):
+        """ COLLIST  : tk_key ',' COLLIST """
+        print('reduce', "COLLIST  : tk_key")
+                        
+    def p_p22(self, p):
+        """ CONDLIST  : COND tk_and CONDLIST """
+        print('reduce', "CONDLIST  : COND tk_and CONDLIST")
+        
+    def p_p23(self, p):
+        """ CONDLIST  : COND """
+        print('reduce', "CONDLIST  : COND")
+    
+    def p_p24(self, p):
+        """ COND  : tk_key OPERADOR VALOR """
+        print('reduce', "COND  : tk_key OPERADOR VALOR")
+
+    def p_p25(self, p):                            
+        """ OPERADOR  : tk_operator """
+        print('reduce', "OPERADOR  : tk_operator")
+
+    def p_p26(self, p):
+        """ VALOR  : tk_num """
+        print('reduce', "VALOR  : tk_num")
+
+    def p_p27(self, p):
+        """ VALOR  : tk_string """
+        print('reduce', "VALOR  : tk_string")
+
+    def p_p28(self, p):
+        """ VALOR  : tk_numdec """
+        print('reduce', "VALOR  : tk_numdec")      
+
+
+    #   p29:       	     | '<=' 
+	#	p30:             | '>=' 
+	#   p31:    VALOR → num
+	#   p32:          | string
+
+    
+    def p_p29(self, p):
+        """ NEW  : tk_create tk_table tk_id QRS ';'"""
+        print('reduce', "NEW  : tk_create tk_table tk_id QRS ';'")
+        
+    def p_p30(self, p):
+        """ NEW  : tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using '(' tk_key ')' ';' """
+        print('reduce', "NEW  : tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using '(' tk_key ')' ';'")
+
+    def p_p31(self, p):
+        """ PROCS  : tk_procedure tk_id tk_do CMDLIST tk_end"""
+        print('reduce', "PROCS  : tk_procedure tk_id tk_do CMDLIST tk_end")
+
+    def p_p32(self, p):
+        """ PROCS  : tk_call tk_id ';' """
+        print('reduce', "PROCS  : tk_call tk_id ';'")
+
+    def p_p33(self, p):
+        """ CMTS  : tk_cmts_line """
+        print('reduce', "CMTS  : tk_cmts_line")
+
+    def p_p34(self, p):
+        """ CMTS  : tk_cmts_block """
+        print('reduce', "CMTS  : tk_cmts_block") 
 
     # ---------------------------------------------  
     def p_error(self, p):

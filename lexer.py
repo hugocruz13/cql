@@ -26,7 +26,7 @@ class ExpLexer:
                       'END':'tk_end'                    
                     }
     tk_reserved = list(set( reservedwords.values())) 
-    tokens   = ("tk_cmts_line", "tk_cmts_block", "tk_operator", "tk_key", "tk_id", "tk_file", "tk_num" , "tk_reserved", "tk_numdec") + tuple(tk_reserved)
+    tokens   = ("tk_cmts_line", "tk_cmts_block", "tk_operator", "tk_key", "tk_id", "tk_file", "tk_num" , "tk_reserved", "tk_numdec", "tk_string") + tuple(tk_reserved)
     literals = ['(', ')', '*', ';', ',']
     t_ignore = ' \n' # espaços são ignorados 
 
@@ -75,6 +75,10 @@ class ExpLexer:
         r"[a-z_]+"
         return t
     
+    def t_tk_string(self, t):
+        r"\'[^\']*\'"
+        return t
+
     # --------------------------------------
 
     # --------------------------------------

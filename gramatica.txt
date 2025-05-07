@@ -22,16 +22,11 @@ Gramática:
 	SELEC → '*'
           | COLLIST		
 	COLLIST → key
-	        | key, COLLIST
+	        | key',' COLLIST
 	CONDLIST → COND "AND" CONDLIST
                | COND	   
-	COND → key Operador VALOR 
-	Operador → '=' 
-	         | '<>' 
-			 | '<' 
-			 | '>' 
-			 | '<=' 
-			 | '>=' 
+	COND → key OPERADOR VALOR 
+	OPERADOR → operador
 	VALOR → numdec
 	      | string
 		  | num
