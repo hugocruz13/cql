@@ -18,14 +18,14 @@ class ExpLexer:
                       'JOIN': 'tk_join', 
                       'AS': 'tk_as',
                       'CREATE': 'tk_create',
-                      'PROCEDURE' : 'tk_prcedure', 
+                      'PROCEDURE' : 'tk_procedure', 
                       'DO' : 'tk_do', 
                       'CALL': 'tk_call',
                       'USING': 'tk_using',
                       'SELECT': 'tk_select'                      
                     }
     tk_reserved = list(set( reservedwords.values())) 
-    tokens   = ("tk_cmts_line", "tk_cmts_block", "tk_operator", "tk_key", "tk_id", "tk_nome", "tk_file", "tk_num" , "tk_reserved") + tuple(tk_reserved)
+    tokens   = ("tk_cmts_line", "tk_cmts_block", "tk_operator", "tk_key", "tk_id", "tk_file", "tk_num" , "tk_reserved", "tk_numdec") + tuple(tk_reserved)
     literals = ['(', ')', '*', ';', ',']
     t_ignore = ' \n' # espaços são ignorados 
 
@@ -48,31 +48,32 @@ class ExpLexer:
     def t_tk_operator(self, t):
         r"=|<>|<=|>=|<|>"
         return t
-
-    # Colunas 
+    
+    # Colunas
     def t_tk_key(self, t):
-        r"[A-Z][a-z]*" 
+        r"[A-Z][a-zA-Z]+" 
         return t
-  
-    # Nome Tabelas
-    def t_tk_id(self, t):
-        r"[a-z]+" # Depois tem de incluir _
-        return t
-    
-    # Nome Procedure
-    def t_tk_nome(self, t):
-        r"[a-z_]+" #Falta completar melhor
-        return t
-    
-    # Num
+
+    # Num inteiro
     def t_tk_num(self, t):
         r"[0-9]+" 
+        return t
+    
+    # Num decimal
+    def t_tk_num_dec(self, t):
+        r"[-]?[0-9]+[.][0-9]+" 
         return t
     
     # File
     def t_tk_file(self, t):
         r'"[a-z]+[.][a-z]+"'
         return t
+
+    # Nome Tabelas e procedure
+    def t_tk_id(self, t):
+        r"[a-z_]+"
+        return t
+    
     # --------------------------------------
 
     # --------------------------------------

@@ -32,12 +32,13 @@ Gramática:
 			 | '>' 
 			 | '<=' 
 			 | '>=' 
-	VALOR → num
+	VALOR → numdec
 	      | string
+		  | num
 	NEW → "CREATE" "TABLE" id QRS ';'
 		| "CREATE" "TABLE" id "FROM" id "JOIN" id "USING"'('key')' ';'
-	PROCS → "PROCEDURE" nome "DO" CMDLIST "END"
-	      | "CALL" nome ';'
+	PROCS → "PROCEDURE" id "DO" CMDLIST "END"
+	      | "CALL" id ';'
 	CMTS → '--' ate ao fim
 	     | '{-' texto_varias_linhas '-}'
 	
