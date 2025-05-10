@@ -5,7 +5,7 @@ g = Grammar()
 g.build()
 
 # String de entrada válida para a regra p9
-input_string = 'IMPORT TABLE minhatabela FROM "dados.csv";'
+input_string = '''CALL atualizar_vendas;'''
 
 # Faz o parsing
 resultado = g.parse(input_string)

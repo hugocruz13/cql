@@ -49,7 +49,7 @@ class Grammar:
 	#   p26:    VALOR → num
 	#   p27:          | string
     #   p28:          | numdec
-	#   p29:    NEW → "CREATE" "TABLE" id QRS ';'
+	#   p29:    NEW → "CREATE" "TABLE" id "SELECT" SELEC "FROM" id "WHERE" CONDLIST ';'
 	#	p30:        | "CREATE" "TABLE" id "FROM" id "JOIN" id "USING"'('key')' ';'
 	#   p31:    PROCS → "PROCEDURE" nome "DO" CMDLIST "END"
 	#   p32:          | "CALL" nome ';'
@@ -156,7 +156,7 @@ class Grammar:
     
     def p_p21(self, p):
         """ COLLIST  : tk_key ',' COLLIST """
-        print('reduce', "COLLIST  : tk_key")
+        print('reduce', "COLLIST  : tk_key ',' COLLIST")
         p[0] = [p[1]] + p[3]
                         
     def p_p22(self, p):
@@ -184,12 +184,12 @@ class Grammar:
         print('reduce', "VALOR  : tk_string")
 
     def p_p28(self, p):
-        """ VALOR  : tk_numdec """
-        print('reduce', "VALOR  : tk_numdec")      
+        """ VALOR  : tk_num_dec """
+        print('reduce', "VALOR  : tk_num_dec")      
 
-    # def p_p29(self, p):
-    #    """ NEW  : tk_create tk_table tk_id QRS ';'"""
-    #    print('reduce', "NEW  : tk_create tk_table tk_id QRS ';'")
+    def p_p29(self, p):
+        """ NEW  : tk_create tk_table tk_id tk_select SELEC tk_from tk_id tk_where CONDLIST ';'"""
+        print('reduce', "NEW  : tk_create tk_table tk_id tk_select SELEC tk_from tk_id tk_where CONDLIST ';'")
         
     def p_p30(self, p):
         """ NEW  : tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using '(' tk_key ')' ';' """

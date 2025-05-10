@@ -26,11 +26,11 @@ class ExpLexer:
                       'END':'tk_end'                    
                     }
     tk_reserved = list(set( reservedwords.values())) 
-    tokens   = ("tk_cmts_line", "tk_cmts_block", "tk_operator", "tk_key", "tk_id", "tk_file", "tk_num" , "tk_reserved", "tk_numdec", "tk_string") + tuple(tk_reserved)
+    tokens   = ("tk_cmts_line", "tk_cmts_block", "tk_operator", "tk_key", "tk_id", "tk_file", "tk_num" , "tk_reserved", "tk_num_dec", "tk_string") + tuple(tk_reserved)
     literals = ['(', ')', '*', ';', ',']
     t_ignore = ' \n' # espaços são ignorados 
 
-    # Comentários
+    # Palavras reservadas
     def t_tk_reserved(self, t):
         r'IMPORT|TABLE|EXPORT|DISCARD|RENAME|PRINT|FROM|WHERE|AND|LIMIT|JOIN|AS|CREATE|PROCEDURE|DO|CALL|USING|SELECT|END'
         t.type = self.reservedwords.get(t.value,'tk_reserved') # palavra reservada?
@@ -55,14 +55,14 @@ class ExpLexer:
         r"[A-Z][a-zA-Z]+" 
         return t
 
-    # Num inteiro
-    def t_tk_num(self, t):
-        r"[0-9]+" 
-        return t
-    
     # Num decimal
     def t_tk_num_dec(self, t):
         r"[-]?[0-9]+[.][0-9]+" 
+        return t
+
+    # Num inteiro
+    def t_tk_num(self, t):
+        r"[0-9]+" 
         return t
     
     # File
@@ -75,6 +75,7 @@ class ExpLexer:
         r"[a-z_]+"
         return t
     
+    #String delimitadas com ""
     def t_tk_string(self, t):
         r"\'[^\']*\'"
         return t
