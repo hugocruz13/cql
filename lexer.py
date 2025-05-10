@@ -77,7 +77,7 @@ class ExpLexer:
     
     #String delimitadas com ""
     def t_tk_string(self, t):
-        r"\'[^\']*\'"
+        r"\"[^\']*\""
         return t
 
     # --------------------------------------

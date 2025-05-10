@@ -5,7 +5,7 @@ g = Grammar()
 g.build()
 
 # String de entrada válida para a regra p9
-input_string = '''CALL atualizar_vendas;'''
+input_string = '''SELECT * FROM observacoes WHERE Temperatura = "teste";'''
 
 # Faz o parsing
 resultado = g.parse(input_string)
