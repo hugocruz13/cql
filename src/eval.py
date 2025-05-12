@@ -9,7 +9,12 @@ class ExpEval:
         "RENAME": lambda args: ExpEval._rename(args),
         "PRINT": lambda args: ExpEval._print(args),       
         "SELECT": lambda args: ExpEval._select(args),
-        ">": lambda args: ExpEval._greater(args)
+        "=": lambda args: ExpEval._equal(args),
+        "<>": lambda args: ExpEval._not_equal(args),
+        "<=": lambda args: ExpEval._less_or_equal(args),
+        ">=": lambda args: ExpEval._greater_or_equal(args),
+        "<": lambda args: ExpEval._less(args),
+        ">": lambda args: ExpEval._greater(args),
     }
     
     @staticmethod
@@ -205,7 +210,66 @@ class ExpEval:
         except Exception as e:
             raise Exception(f"Erro ao selecionar dados: {e}")
 
-            
+    @staticmethod
+    def _equal(args):
+        coluna= args[0]
+        valor = float(args[1])
+        
+        def filtro(linha):
+            try:
+                return float(linha[coluna]) == valor
+            except:
+                return False
+        return filtro
+
+    @staticmethod
+    def _not_equal(args):
+        coluna= args[0]
+        valor = float(args[1])
+        
+        def filtro(linha):
+            try:
+                return float(linha[coluna]) != valor
+            except:
+                return False
+        return filtro
+
+    @staticmethod
+    def _less_or_equal(args):
+        coluna= args[0]
+        valor = float(args[1])
+        
+        def filtro(linha):
+            try:
+                return float(linha[coluna]) <= valor
+            except:
+                return False
+        return filtro
+
+    @staticmethod
+    def _greater_or_equal(args):
+        coluna= args[0]
+        valor = float(args[1])
+        
+        def filtro(linha):
+            try:
+                return float(linha[coluna]) >= valor
+            except:
+                return False
+        return filtro
+    
+    @staticmethod
+    def _less(args):
+        coluna= args[0]
+        valor = float(args[1])
+        
+        def filtro(linha):
+            try:
+                return float(linha[coluna]) < valor
+            except:
+                return False
+        return filtro
+    
     @staticmethod
     def _greater(args):
         coluna= args[0]
@@ -216,7 +280,8 @@ class ExpEval:
                 return float(linha[coluna]) > valor
             except:
                 return False
-        
         return filtro
+    
+
 
 ExpEval.symbols = {} 
