@@ -1,5 +1,6 @@
 from lexer import ExpLexer
 
+
 # Cria e constroi o analisador léxico
 lexer = ExpLexer()
 lexer.build()

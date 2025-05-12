@@ -1,5 +1,3 @@
-literals = ['=' , '<>' , '<' , '>' , '<=' , '>=', '(' ')', '*' ]
-
 Gramática:
 
 	PROG → CMDLIST
@@ -30,7 +28,7 @@ Gramática:
 	VALOR → numdec
 	      | string
 		  | num
-	NEW → "CREATE" "TABLE" id QRS ';'
+	NEW → "CREATE" "TABLE" id QRS
 		| "CREATE" "TABLE" id "FROM" id "JOIN" id "USING"'('key')' ';'
 	PROCS → "PROCEDURE" id "DO" CMDLIST "END"
 	      | "CALL" id ';'

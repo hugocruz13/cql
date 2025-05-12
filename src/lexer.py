@@ -62,7 +62,7 @@ class ExpLexer:
     
     # File
     def t_tk_file(self, t):
-        r'"[a-z]+[.][a-z]+"'
+        r'"[/a-z]+[.][a-z]+"'
         return t 
     
     #String delimitadas com ""
