@@ -46,7 +46,7 @@ class ExpLexer:
     
     # Colunas, Tabelas, Procedure ou Palavra
     def t_tk_id(self, t):
-        r"[a-zA-Z_]+" 
+        r"[a-zA-Z0-9_]+" 
         t.type = self.reservedwords.get(t.value.upper(),'tk_id')
         return t
 
