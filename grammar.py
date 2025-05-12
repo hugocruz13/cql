@@ -150,13 +150,13 @@ class Grammar:
         p[0] = p[1]
 
     def p_p20(self, p):
-        """ COLLIST  : tk_key """
-        print('reduce', "COLLIST  : tk_key")
+        """ COLLIST  : tk_id """
+        print('reduce', "COLLIST  : tk_id")
         p[0] = [p[1]]
     
     def p_p21(self, p):
-        """ COLLIST  : tk_key ',' COLLIST """
-        print('reduce', "COLLIST  : tk_key ',' COLLIST")
+        """ COLLIST  : tk_id ',' COLLIST """
+        print('reduce', "COLLIST  : tk_id ',' COLLIST")
         p[0] = [p[1]] + p[3]
                         
     def p_p22(self, p):
@@ -168,8 +168,8 @@ class Grammar:
         print('reduce', "CONDLIST  : COND")
     
     def p_p24(self, p):
-        """ COND  : tk_key OPERADOR VALOR """
-        print('reduce', "COND  : tk_key OPERADOR VALOR")
+        """ COND  : tk_id OPERADOR VALOR """
+        print('reduce', "COND  : tk_id OPERADOR VALOR")
 
     def p_p25(self, p):                            
         """ OPERADOR  : tk_operator """
@@ -192,8 +192,8 @@ class Grammar:
         print('reduce', "NEW  : tk_create tk_table tk_id QRS")
         
     def p_p30(self, p):
-        """ NEW  : tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using '(' tk_key ')' ';' """
-        print('reduce', "NEW  : tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using '(' tk_key ')' ';'")
+        """ NEW  : tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using '(' tk_id ')' ';' """
+        print('reduce', "NEW  : tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using '(' tk_id ')' ';'")
 
     def p_p31(self, p):
         """ PROCS  : tk_procedure tk_id tk_do CMDLIST tk_end"""
