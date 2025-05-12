@@ -1,37 +1,37 @@
 Gramática:
 
 	PROG → CMDLIST
-	CMDLIST → CMD 
-	        | CMD CMDLIST			
-	CMD → CONF
-	    | QRS
-		| NEW
-		| PROCS
-		| CMTS		
+ CMDLIST → CMD 
+	     | CMD CMDLIST			
+  	 CMD → CONF
+	     | QRS
+		 | NEW
+		 | PROCS
+		 | CMTS		
 	CONF → "IMPORT" "TABLE" id "FROM" file ';'
 		 | "EXPORT" "TABLE" id "AS" file ';'
 		 | "DISCARD" "TABLE" id ';'
 		 | "RENAME" "TABLE" id id ';'
 		 | "PRINT" "TABLE" id ';'	
-	QRS → "SELECT" SELEC "FROM" id ';' 
-        | "SELECT" SELEC "FROM" id "WHERE" CONDLIST ';'
-		| "SELECT" SELEC "FROM" id "LIMIT" num ';' 
-        | "SELECT" SELEC "FROM" id "WHERE" CONDLIST "LIMIT" num';'	
-	SELEC → '*'
-          | COLLIST		
-	COLLIST → key
-	        | key',' COLLIST
-	CONDLIST → COND "AND" CONDLIST
-               | COND	   
+	 QRS → "SELECT" SELEC "FROM" id ';' 
+         | "SELECT" SELEC "FROM" id "WHERE" CONDLIST ';'
+		 | "SELECT" SELEC "FROM" id "LIMIT" num ';' 
+         | "SELECT" SELEC "FROM" id "WHERE" CONDLIST "LIMIT" num';'	
+   SELEC → '*'
+         | COLLIST		
+ COLLIST → key
+	     | key',' COLLIST
+CONDLIST → COND "AND" CONDLIST
+         | COND	   
 	COND → key OPERADOR VALOR 
-	OPERADOR → operador
-	VALOR → numdec
-	      | string
-		  | num
-	NEW → "CREATE" "TABLE" id QRS
-		| "CREATE" "TABLE" id "FROM" id "JOIN" id "USING"'('key')' ';'
-	PROCS → "PROCEDURE" id "DO" CMDLIST "END"
-	      | "CALL" id ';'
+OPERADOR → operador
+   VALOR → numdec
+	     | string
+	     | num
+	 NEW → "CREATE" "TABLE" id QRS
+	     | "CREATE" "TABLE" id "FROM" id "JOIN" id "USING"'('key')' ';'
+   PROCS → "PROCEDURE" id "DO" CMDLIST "END"
+	     | "CALL" id ';'
 	CMTS → '--' ate ao fim
 	     | '{-' texto_varias_linhas '-}'
 	
