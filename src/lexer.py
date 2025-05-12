@@ -53,12 +53,14 @@ class ExpLexer:
 
     # Números decimais.
     def t_tk_num_dec(self, t):
-        r"[-]?[0-9]+[.][0-9]+" 
+        r"[-]?[0-9]+[.][0-9]+"
+        t.value = float(t.value)
         return t
 
     # Números inteiros.
     def t_tk_num(self, t):
         r"[0-9]+" 
+        t.value = int(t.value)
         return t
     
     # Caminho para o ficheiro e o proprio ficheiro.

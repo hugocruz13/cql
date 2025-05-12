@@ -19,6 +19,9 @@ class ExpEval:
     
     @staticmethod
     def evaluate(ast):
+        #float
+        if type(ast) is float:
+            return ast
         if type(ast) is int:
             return ast
         if type(ast) is dict:  # { 'op': ... , 'args': ...}
@@ -26,6 +29,8 @@ class ExpEval:
         if type(ast) is str:
             return ast
         if type(ast) is list:
+            if all(isinstance(item, dict) and 'op' in item and 'args' in item for item in ast):
+                return [ExpEval._eval_operator(item) for item in ast]
             return ast
         raise Exception(f"Unknown AST type")
     
@@ -170,11 +175,15 @@ class ExpEval:
 
             columns = args[0]
             table = args[1]
-            filtro = None
+            filtros = []
             limit = None
             
-            if len(args) >= 3 and callable(args[2]):
-                filtro = args[2]
+            if len(args) >= 3:
+                if callable(args[2]):
+                    filtros.append(args[2])  # Adiciona o primeiro filtro
+                elif isinstance(args[2], list):  # Se for uma lista de filtros
+                    filtros.extend(args[2])  # Adiciona todos os filtros dessa lista
+
             if len(args) >= 4:
                 try:
                     limit = int(args[3])
@@ -190,7 +199,7 @@ class ExpEval:
                 raise Exception(f"Tabela '{table}' sem dados válidos.")
 
             # Aplica filtro, se existir
-            if filtro:
+            for filtro in filtros:
                 data = list(filter(filtro, data))
 
             # Aplica LIMIT, se existir
@@ -210,14 +219,16 @@ class ExpEval:
         except Exception as e:
             raise Exception(f"Erro ao selecionar dados: {e}")
 
+    #filtros com erros (mas quase a dar)
+
     @staticmethod
     def _equal(args):
         coluna= args[0]
-        valor = float(args[1])
+        valor = args[1]
         
         def filtro(linha):
             try:
-                return float(linha[coluna]) == valor
+                return linha[coluna] == valor
             except:
                 return False
         return filtro
@@ -225,11 +236,11 @@ class ExpEval:
     @staticmethod
     def _not_equal(args):
         coluna= args[0]
-        valor = float(args[1])
-        
+        valor = args[1]        
+
         def filtro(linha):
             try:
-                return float(linha[coluna]) != valor
+                return linha[coluna] != valor
             except:
                 return False
         return filtro
@@ -237,11 +248,11 @@ class ExpEval:
     @staticmethod
     def _less_or_equal(args):
         coluna= args[0]
-        valor = float(args[1])
+        valor = args[1]
         
         def filtro(linha):
             try:
-                return float(linha[coluna]) <= valor
+                return linha[coluna] <= valor
             except:
                 return False
         return filtro
@@ -253,7 +264,7 @@ class ExpEval:
         
         def filtro(linha):
             try:
-                return float(linha[coluna]) >= valor
+                return linha[coluna] >= valor
             except:
                 return False
         return filtro
@@ -261,11 +272,11 @@ class ExpEval:
     @staticmethod
     def _less(args):
         coluna= args[0]
-        valor = float(args[1])
+        valor = args[1]
         
         def filtro(linha):
             try:
-                return float(linha[coluna]) < valor
+                return (linha[coluna]) < valor
             except:
                 return False
         return filtro
@@ -273,11 +284,11 @@ class ExpEval:
     @staticmethod
     def _greater(args):
         coluna= args[0]
-        valor = float(args[1])
+        valor = args[1]
         
         def filtro(linha):
             try:
-                return float(linha[coluna]) > valor
+                return (linha[coluna]) > valor
             except:
                 return False
         return filtro

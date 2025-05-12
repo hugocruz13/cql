@@ -171,7 +171,7 @@ class Grammar:
     def p_p23(self, p):
         """ CONDLIST  : COND """
         print('reduce', "CONDLIST  : COND")
-        p[0] = p[1]
+        p[0] = [p[1]]
     
     def p_p24(self, p):
         """ COND  : tk_id OPERADOR VALOR """
