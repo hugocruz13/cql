@@ -101,12 +101,12 @@ class Grammar:
     def p_p9(self, p):
         """ CONF  : tk_import tk_table tk_id tk_from tk_file ';'"""
         print('reduce', "CONF  : tk_import tk_table tk_id tk_from tk_file ';'")
-        p[0] = {'op':p[1],'args':[p[3],p[5]]} 
+        p[0] = {'op': p[1], 'args': [p[3], p[5].strip('"')]} #strip remover caracteres do início e do fim de uma string
 
     def p_p10(self, p):
         """ CONF  : tk_export tk_table tk_id tk_as tk_file ';'"""
         print('reduce', "CONF  : tk_export tk_table tk_id tk_as tk_file ';'")
-        p[0] = {'op':p[1],'args':[p[3],p[5]]}
+        p[0] = {'op':p[1],'args':[p[3],p[5].strip('"')]} #strip remover caracteres do início e do fim de uma string
 
     def p_p11(self, p):
         """ CONF  : tk_discard tk_table tk_id ';'"""

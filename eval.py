@@ -1,8 +1,14 @@
+import csv
+
 class ExpEval:
+
     operators = {
-        "IMPORT": lambda args: args[0] + args[1],
-        "SELECT": lambda args: ExpEval._select(args),
-        "*": lambda args: args[0] * args[1],
+        "IMPORT": lambda args: ExpEval._import(args),
+        "EXPORT": lambda args: ExpEval._export(args),
+        "DISCARD": lambda args: ExpEval._discard(args),
+        "RENAME": lambda args: ExpEval._rename(args),
+        "PRINT": lambda args: ExpEval._print(args),       
+        "SELECT": lambda args: ExpEval._select(args),       
         "seq": lambda args: args[-1],
         "atr": lambda args: ExpEval._attrib(args),
         "esc": lambda args: print(args[0]),
@@ -11,7 +17,7 @@ class ExpEval:
     
     @staticmethod
     def evaluate(ast):
-        if type(ast) is int:  # constant value, eg in (int, str)
+        if type(ast) is int:
             return ast
         if type(ast) is dict:  # { 'op': ... , 'args': ...}
             return ExpEval._eval_operator(ast)
@@ -25,7 +31,13 @@ class ExpEval:
     def _eval_operator(ast):
         if 'op' in ast:
             op = ast["op"]
-            args = [ExpEval.evaluate(a) for a in ast['args']]
+            raw_args = ast['args']
+
+            if not isinstance(raw_args, list):
+                raw_args = [raw_args]
+
+            args = [ExpEval.evaluate(a) for a in raw_args]
+
             if op in ExpEval.operators:
                 func = ExpEval.operators[op]
                 return func(args)
@@ -41,35 +53,147 @@ class ExpEval:
         raise Exception('Undefined AST')
     
     @staticmethod
-    def _select(args):
+    def _import(args):
         if not args or len(args) != 2:
-            raise Exception("Erro: o operador '_select' precisa de dois argumentos: as colunas e a tabela.")
+            raise Exception("Erro: o operador 'IMPORT' precisa de dois argumentos: nome da tabela e ficheiro.")
         
-        columns = args[0]  # Colunas a serem selecionadas
-        table_key = args[1]  # Tabela 
+        table = args[0]
+        file_path = args[1]
+
+        if table in ExpEval.symbols:
+            raise Exception(f"Tabela'{table}' já existe.")
         
-        if table_key not in ExpEval.symbols:
-            raise Exception(f"Erro: chave '{table_key}' não encontrada em ExpEval.symbols.")
+        try:
+            with open(file_path, newline='', encoding='utf-8') as csvfile:
+                reader = csv.DictReader(csvfile)
+                data = [row for row in reader]
+                ExpEval.symbols[table] = data  # Armazena na 'tabela'
+                return f"Tabela '{table}' criada com sucesso! "
+        except FileNotFoundError:
+            raise Exception(f"Erro: ficheiro '{file_path}' não encontrado.")
+        except Exception as e:
+            raise Exception(f"Erro ao importar ficheiro: {e}")
+    
+    @staticmethod
+    def _export(args):
+        if not args or len(args) != 2:
+            raise Exception("Erro: o operador 'Export' precisa de dois argumentos: nome da tabela e ficheiro.")
         
-        data = ExpEval.symbols[table_key]  # A lista de dados (ex: 'observacoes')
-        
-        if not isinstance(data, list):
-            raise Exception(f"Erro: o valor de '{table_key}' não é uma lista.")
-        
-        # Seleciona apenas as colunas fornecidas
-        result = []
-        for item in data:
-            selected_item = {col: item[col] for col in columns if col in item}
-            result.append(selected_item)
-        
-        return result
+        table = args[0]
+        file_path = args[1]
+
+        if table not in ExpEval.symbols:
+            raise Exception(f"Erro: a tabela '{table}' não existe !")
+    
+        data = ExpEval.symbols[table]  #Dados que a tabela tem! 
+
+        if not isinstance(data, list) or not data:
+            raise Exception(f"Erro: a tabela '{table}' não contém dados válidos.")
+    
+        #Colunas 
+        fieldnames = data[0].keys()
+
+        try:
+            with open(file_path, 'w', newline='', encoding='utf-8') as csvfile:
+                        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+                        writer.writeheader()  # Escreve o cabeçalho
+                        writer.writerows(data)  # Escreve os dados
+                        return f"Tabela '{table}' exportada com sucesso! "
+ 
+        except Exception as e:
+            raise Exception(f"Erro ao exportar ficheiro: {e}")
 
 
-# Exemplo de como incluir um dicionário
-ExpEval.symbols = {
-    'observacoes': [
-        {'DataHoraObservacao': '2024-05-06 12:00', 'Id': 1, 'Valor': 35.6},
-        {'DataHoraObservacao': '2024-05-06 13:00', 'Id': 2, 'Valor': 36.1}
-    ]
-}
+    @staticmethod
+    def _discard(args):
+        if not args or len(args) != 1:
+            raise Exception("Erro: o operador 'DISCARD' precisa de um argumento: a tabela.")
+        
+        table = args[0]
+        
+        if table not in ExpEval.symbols:
+            raise Exception(f"Erro: a tabela '{table}' não existe")
+    
+        try:
+            del ExpEval.symbols[table]
+            return f"Tabela '{table}' eliminada com sucesso."
+        except Exception as e:
+            raise Exception(f"Erro ao eliminar a tabela: {e}")
 
+    @staticmethod
+    def _rename(args):
+        if not args or len(args) != 2:
+            raise Exception("Erro: o operador 'RENAME' precisa de dois argumento: nome atual, novo nome")
+        
+        table = args[0]
+        table_nova = args[1]
+        
+        if table not in ExpEval.symbols:
+            raise Exception(f"Erro: a tabela '{table}' não existe")
+    
+        try:
+            ExpEval.symbols[table_nova] = ExpEval.symbols[table] 
+            del ExpEval.symbols[table]
+            return f"Nome da tabela '{table}' alterado para '{table_nova}' com sucesso! "
+        except Exception as e:
+            raise Exception(f"Erro ao eliminar a tabela: {e}")
+        
+    @staticmethod
+    def _print(args):
+        if not args or len(args) != 1:
+            raise Exception("Erro: o operador 'PRINT' precisa de um argumento: a tabela.")
+        
+        table = args[0]
+        
+        if table not in ExpEval.symbols:
+            raise Exception(f"Erro: a tabela '{table}' não existe")
+
+        data = ExpEval.symbols[table]  #Dados que a tabela selecionada tem!
+
+        if not isinstance(data, list) or not data:
+            raise Exception(f"Erro: a tabela '{table}' não contém dados válidos.")
+
+        try:
+            for item in data:
+                print(item)
+            return f"Dados da tabela '{table}' imprimidos com sucesso."
+        except Exception as e:
+            raise Exception(f"Erro ao imprimir dados da tabela: {e}")
+
+    @staticmethod
+    def _select(args):
+
+        try:
+            if not args or len(args) != 2:
+                raise Exception("Erro: o operador '_select' precisa de dois argumentos: as colunas e a tabela.")
+            
+            columns = args[0]  # Colunas
+            table_key = args[1]  # Tabela 
+            
+            if table_key not in ExpEval.symbols:
+                raise Exception(f"Tabela'{table_key}' não existe.")
+            
+            data = ExpEval.symbols[table_key]  #Dados que a tabela selecionada tem!
+            
+            if not isinstance(data, list):
+                raise Exception(f"Erro: o valor de '{table_key}' não é uma lista.")
+            
+            # Seleciona apenas as colunas fornecidas
+            result = []
+
+            for item in data:
+                selected_item = {}
+
+                # Para cada coluna solicitada, se a coluna existir no item, adicione ao dicionário
+                for col in columns:
+                    if col in item:
+                        selected_item[col] = item[col]
+
+                # Adiciona o dicionário filtrado na lista de resultados
+                result.append(selected_item)
+            
+            return result
+        except Exception as e:
+            raise Exception(f"Erro ao importar ficheiro: {e}")
+            
+ExpEval.symbols = {} 

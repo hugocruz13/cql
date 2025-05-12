@@ -20,11 +20,11 @@ if len(sys.argv) == 2:
 		except Exception as e:
 			print(e, file=sys.stderr)
 else:
-	for expr in iter(lambda: input(">> "), ""):
+	for expr in iter(lambda: input("CQL >> "), ""):
 		try:
 			ast = lg.parse(expr)
 			resultado = ExpEval.evaluate(ast)
-			#if res is not None:
+			#if resultado is not None:
 			print(f"<< {resultado}")
 		except Exception as e:
 			print(e)
