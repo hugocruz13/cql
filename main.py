@@ -21,8 +21,6 @@ if len(sys.argv) == 2:
 			print(e, file=sys.stderr)
 else:
 	for expr in iter(lambda: input("CQL >> "), ""):
-		if expr .strip().lower() == "exit":
-			break
 		try:
 			ast = lg.parse(expr)
 			resultado = ExpEval.evaluate(ast)
