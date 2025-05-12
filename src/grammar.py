@@ -21,40 +21,40 @@ class Grammar:
     # especificação da gramática G=<N,T,S,P>:
     #  N={PROG,CMDLIST,CMD,QRS,NEW,PROCS,CMTS,}  T={id, file, ';'}, S é o axioma da gramática
     #  P tem as seguintes regras de produção: 
-    #   p1:    PROG → CMDLIST
-	#   p2: CMDLIST → CMD 
-	#   p3:         | CMD CMDLIST			
-	#   p4:     CMD → CONF
-	#   p5:         | QRS
-	#   p6:         | NEW
-	#   p7:         | PROCS
-	#	p8:         | CMTS		
-	#   p9:     CONF → "IMPORT" "TABLE" id "FROM" file ';'
-	#	p10:         | "EXPORT" "TABLE" id "AS" file ';'
-	#   p11:	     | "DISCARD" "TABLE" id ';'
-	#   p12:	     | "RENAME" "TABLE" id id ';'
-	#   p13:         | "PRINT" "TABLE" id ';'	
-	#   p14:    QRS → "SELECT" SELEC "FROM" id ';' 
-    #   p15:        | "SELECT" SELEC "FROM" id "WHERE" CONDLIST ';'
-	#   p16:	    | "SELECT" SELEC "FROM" id "LIMIT" num ';' 
-    #   p17:        | "SELECT" SELEC "FROM" id "WHERE" CONDLIST "LIMIT" num';'	
+    #   p1:      PROG → CMDLIST
+	#   p2:   CMDLIST → CMD 
+	#   p3:           | CMD CMDLIST			
+	#   p4:       CMD → CONF
+	#   p5:           | QRS
+	#   p6:           | NEW
+	#   p7:           | PROCS
+	#	p8:           | CMTS		
+	#   p9:      CONF → "IMPORT" "TABLE" id "FROM" file ';'
+	#	p10:          | "EXPORT" "TABLE" id "AS" file ';'
+	#   p11:	      | "DISCARD" "TABLE" id ';'
+	#   p12:	      | "RENAME" "TABLE" id id ';'
+	#   p13:          | "PRINT" "TABLE" id ';'	
+	#   p14:      QRS → "SELECT" SELEC "FROM" id ';' 
+    #   p15:          | "SELECT" SELEC "FROM" id "WHERE" CONDLIST ';'
+	#   p16:	      | "SELECT" SELEC "FROM" id "LIMIT" num ';' 
+    #   p17:          | "SELECT" SELEC "FROM" id "WHERE" CONDLIST "LIMIT" num';'	
 	#   p18:    SELEC → '*'
     #   p19:          | COLLIST		
-	#   p20:    COLLIST → key
-	#   p21:            | key, COLLIST
-	#   p22:    CONDLIST → COND "AND" CONDLIST
-    #   p23:             | COND	   
-	#   p24:    COND → key OPERADOR VALOR 
-	#   p25:    OPERADOR → operador
+	#   p20:  COLLIST → key
+	#   p21:          | key, COLLIST
+	#   p22: CONDLIST → COND "AND" CONDLIST
+    #   p23:          | COND	   
+	#   p24:     COND → key OPERADOR VALOR 
+	#   p25: OPERADOR → operador
 	#   p26:    VALOR → num
 	#   p27:          | string
     #   p28:          | numdec
-	#   p29:    NEW → "CREATE" "TABLE" id "SELECT" SELEC "FROM" id "WHERE" CONDLIST ';'
-	#	p30:        | "CREATE" "TABLE" id "FROM" id "JOIN" id "USING"'('key')' ';'
+	#   p29:      NEW → "CREATE" "TABLE" id "SELECT" SELEC "FROM" id "WHERE" CONDLIST ';'
+	#	p30:          | "CREATE" "TABLE" id "FROM" id "JOIN" id "USING"'('key')' ';'
 	#   p31:    PROCS → "PROCEDURE" nome "DO" CMDLIST "END"
 	#   p32:          | "CALL" nome ';'
-	#   p33:    CMTS → '--' ate ao fim
-	#   p34:         | '{-' texto_varias_linhas '-}'
+	#   p33:     CMTS → '--' ate ao fim
+	#   p34:          | '{-' texto_varias_linhas '-}'
     # -----------------------------
 
 
