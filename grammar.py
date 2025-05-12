@@ -131,6 +131,7 @@ class Grammar:
     def p_p15(self, p):
         """ QRS  : tk_select SELEC tk_from tk_id tk_where CONDLIST ';' """
         print('reduce', "QRS  : tk_select SELEC tk_from tk_id tk_where CONDLIST ';'")
+        p[0] = {'op':p[1],'args':[p[2], p[4], p[6]]}
 
     def p_p16(self, p):
         """ QRS  : tk_select SELEC tk_from tk_id tk_limit tk_num ';' """
@@ -152,7 +153,7 @@ class Grammar:
     def p_p20(self, p):
         """ COLLIST  : tk_id """
         print('reduce', "COLLIST  : tk_id")
-        p[0] = [p[1]]
+        p[0] = p[1]
     
     def p_p21(self, p):
         """ COLLIST  : tk_id ',' COLLIST """
@@ -174,18 +175,22 @@ class Grammar:
     def p_p25(self, p):                            
         """ OPERADOR  : tk_operator """
         print('reduce', "OPERADOR  : tk_operator")
+        p[0] = p[1]
 
     def p_p26(self, p):
         """ VALOR  : tk_num """
         print('reduce', "VALOR  : tk_num")
+        p[0] = p[1]
 
     def p_p27(self, p):
         """ VALOR  : tk_string """
         print('reduce', "VALOR  : tk_string")
+        p[0] = p[1]
 
     def p_p28(self, p):
         """ VALOR  : tk_num_dec """
-        print('reduce', "VALOR  : tk_num_dec")      
+        print('reduce', "VALOR  : tk_num_dec")     
+        p[0] = p[1] 
 
     def p_p29(self, p):
         """ NEW  : tk_create tk_table tk_id QRS"""

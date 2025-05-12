@@ -8,11 +8,8 @@ class ExpEval:
         "DISCARD": lambda args: ExpEval._discard(args),
         "RENAME": lambda args: ExpEval._rename(args),
         "PRINT": lambda args: ExpEval._print(args),       
-        "SELECT": lambda args: ExpEval._select(args),       
-        "seq": lambda args: args[-1],
-        "atr": lambda args: ExpEval._attrib(args),
-        "esc": lambda args: print(args[0]),
-        "_select": lambda args: ExpEval._select(args)
+        "SELECT": lambda args: ExpEval._select(args),
+        "seq": lambda args: args[-1]
     }
     
     @staticmethod
@@ -163,37 +160,48 @@ class ExpEval:
     @staticmethod
     def _select(args):
 
+            #primeiro ir ao where e so depois selecioanr 
+            #linhas
+            #where
+            #coluna
+
         try:
-            if not args or len(args) != 2:
-                raise Exception("Erro: o operador '_select' precisa de dois argumentos: as colunas e a tabela.")
+            #Numero de Argumentos da query
+            if not args or len(args) < 2:
+                raise Exception("Erro: o operador 'SELECT' precisa de dois argumentos: colunas e tabela.")
             
-            columns = args[0]  # Colunas
-            table_key = args[1]  # Tabela 
-            
-            if table_key not in ExpEval.symbols:
-                raise Exception(f"Tabela'{table_key}' não existe.")
-            
-            data = ExpEval.symbols[table_key]  #Dados que a tabela selecionada tem!
-            
-            if not isinstance(data, list):
-                raise Exception(f"Erro: o valor de '{table_key}' não é uma lista.")
-            
-            # Seleciona apenas as colunas fornecidas
-            result = []
+            columns = args[0]
+            table = args[1]
 
-            for item in data:
-                selected_item = {}
+            if args and len(args) > 2:
+                conditions = args[2:]
+            else:
+                conditions = None
 
-                # Para cada coluna solicitada, se a coluna existir no item, adicione ao dicionário
-                for col in columns:
-                    if col in item:
-                        selected_item[col] = item[col]
 
-                # Adiciona o dicionário filtrado na lista de resultados
-                result.append(selected_item)
-            
-            return result
+            if table not in ExpEval.symbols:
+                raise Exception(f"Erro: a tabela '{table}' não existe")
+
+            data = ExpEval.symbols[table]  #Dados que a tabela selecionada tem!
+
+            if not isinstance(data, list) or not data:
+                raise Exception(f"Erro: a tabela '{table}' não contém dados válidos.")
+
+            if columns == "*":
+                return data
+            else:
+                selected_data = []  # Lista onde vamos guardar os dicionários filtrados
+
+                for row in data:  # Para cada linha (dicionário) na lista de dados
+                    new_row = {}  # Criamos um novo dicionário vazio
+
+                    for col in columns:  # Para cada coluna que queremos manter
+                        if col in row:  # Se essa coluna existe na linha atual
+                            new_row[col] = row[col]  # Adicionamos ao novo dicionário
+
+                    selected_data.append(new_row)  # Adicionamos a linha filtrada à nova lista
+                return selected_data
         except Exception as e:
-            raise Exception(f"Erro ao importar ficheiro: {e}")
+            raise Exception(f"Erro ao selecionar dados: {e}")
             
 ExpEval.symbols = {} 
