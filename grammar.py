@@ -188,8 +188,8 @@ class Grammar:
         print('reduce', "VALOR  : tk_num_dec")      
 
     def p_p29(self, p):
-        """ NEW  : tk_create tk_table tk_id tk_select SELEC tk_from tk_id tk_where CONDLIST ';'"""
-        print('reduce', "NEW  : tk_create tk_table tk_id tk_select SELEC tk_from tk_id tk_where CONDLIST ';'")
+        """ NEW  : tk_create tk_table tk_id QRS"""
+        print('reduce', "NEW  : tk_create tk_table tk_id QRS")
         
     def p_p30(self, p):
         """ NEW  : tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using '(' tk_key ')' ';' """
