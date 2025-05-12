@@ -156,7 +156,7 @@ class Grammar:
     def p_p20(self, p):
         """ COLLIST  : tk_id """
         print('reduce', "COLLIST  : tk_id")
-        p[0] = p[1]
+        p[0] = [p[1]]
     
     def p_p21(self, p):
         """ COLLIST  : tk_id ',' COLLIST """

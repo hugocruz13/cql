@@ -9,7 +9,7 @@ class ExpEval:
         "RENAME": lambda args: ExpEval._rename(args),
         "PRINT": lambda args: ExpEval._print(args),       
         "SELECT": lambda args: ExpEval._select(args),
-        "seq": lambda args: args[-1]
+        ">": lambda args: ExpEval._greater(args)
     }
     
     @staticmethod
@@ -159,49 +159,64 @@ class ExpEval:
 
     @staticmethod
     def _select(args):
-
-            #primeiro ir ao where e so depois selecioanr 
-            #linhas
-            #where
-            #coluna
-
         try:
-            #Numero de Argumentos da query
             if not args or len(args) < 2:
-                raise Exception("Erro: o operador 'SELECT' precisa de dois argumentos: colunas e tabela.")
-            
+                raise Exception("Erro: SELECT precisa de pelo menos colunas e nome da tabela.")
+
             columns = args[0]
             table = args[1]
-
-            if args and len(args) > 2:
-                conditions = args[2:]
-            else:
-                conditions = None
-
+            filtro = None
+            limit = None
+            
+            if len(args) >= 3 and callable(args[2]):
+                filtro = args[2]
+            if len(args) >= 4:
+                try:
+                    limit = int(args[3])
+                except ValueError:
+                    raise Exception("Erro: o limite deve ser um número inteiro.")
 
             if table not in ExpEval.symbols:
-                raise Exception(f"Erro: a tabela '{table}' não existe")
+                raise Exception(f"Tabela '{table}' não existe.")
 
-            data = ExpEval.symbols[table]  #Dados que a tabela selecionada tem!
+            data = ExpEval.symbols[table]
 
             if not isinstance(data, list) or not data:
-                raise Exception(f"Erro: a tabela '{table}' não contém dados válidos.")
+                raise Exception(f"Tabela '{table}' sem dados válidos.")
 
+            # Aplica filtro, se existir
+            if filtro:
+                data = list(filter(filtro, data))
+
+            # Aplica LIMIT, se existir
+            if limit is not None:
+                data = data[:limit]
+
+            # Aplica projeção de colunas
             if columns == "*":
                 return data
             else:
-                selected_data = []  # Lista onde vamos guardar os dicionários filtrados
-
-                for row in data:  # Para cada linha (dicionário) na lista de dados
-                    new_row = {}  # Criamos um novo dicionário vazio
-
-                    for col in columns:  # Para cada coluna que queremos manter
-                        if col in row:  # Se essa coluna existe na linha atual
-                            new_row[col] = row[col]  # Adicionamos ao novo dicionário
-
-                    selected_data.append(new_row)  # Adicionamos a linha filtrada à nova lista
+                selected_data = []
+                for row in data:
+                    new_row = {col: row[col] for col in columns if col in row}
+                    selected_data.append(new_row)
                 return selected_data
+
         except Exception as e:
             raise Exception(f"Erro ao selecionar dados: {e}")
+
             
+    @staticmethod
+    def _greater(args):
+        coluna= args[0]
+        valor = float(args[1])
+        
+        def filtro(linha):
+            try:
+                return float(linha[coluna]) > valor
+            except:
+                return False
+        
+        return filtro
+
 ExpEval.symbols = {} 
