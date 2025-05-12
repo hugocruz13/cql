@@ -28,13 +28,14 @@ class ExpLexer:
     tk_reserved = list(set( reservedwords.values())) 
     tokens   = ("tk_cmts_line", "tk_cmts_block", "tk_operator", "tk_id", "tk_file", "tk_num" ,"tk_num_dec", "tk_string") + tuple(tk_reserved)
     literals = ['(', ')', '*', ';', ',']
-    t_ignore = ' \n' # espaços são ignorados 
+    t_ignore = ' \n\t' # espaços são ignorados 
     
-    # Comentários
+    # Comentários linha
     def t_tk_cmts_line(self, t):
         r"--[^\n]*"
         return t
     
+    # Bloco de comentários 
     def t_tk_cmts_block(self, t):
         r"\{-[\s\S]*?-\}" # Verificar se da depois ([\s\S]*?- qualquer letra e com enter, *?-0 ou mais ocorrências,lazy)
         return t
@@ -44,30 +45,30 @@ class ExpLexer:
         r"=|<>|<=|>=|<|>"
         return t
     
-    # Colunas, Tabelas, Procedure ou Palavra
+    # Colunas, Tabelas, Procedures ou Palavras reservadas.
     def t_tk_id(self, t):
-        r"[a-zA-Z0-9_]+" 
+        r"[a-zA-Z][a-zA-Z0-9_]+" 
         t.type = self.reservedwords.get(t.value.upper(),'tk_id')
         return t
 
-    # Num decimal
+    # Números decimais.
     def t_tk_num_dec(self, t):
         r"[-]?[0-9]+[.][0-9]+" 
         return t
 
-    # Num inteiro
+    # Números inteiros.
     def t_tk_num(self, t):
         r"[0-9]+" 
         return t
     
-    # File
+    # Caminho para o ficheiro e o proprio ficheiro.
     def t_tk_file(self, t):
-        r'"[/a-z]+[.][a-z]+"'
+        r'"[^"]+\.[a-zA-Z0-9]+"'
         return t 
     
-    #String delimitadas com ""
+    # String delimitadas por ''.
     def t_tk_string(self, t):
-        r"\"[^\']*\""
+        r"'[^']*'"
         return t
 
     # --------------------------------------
@@ -89,6 +90,6 @@ class ExpLexer:
         return token if token is None else token.type 
      
     def t_error(self, t):
-        print(f"Unexpected token: [{t.value[:10]}]")
-        exit(1)
+        raise SyntaxError(f"Unexpected token: [{t.value[:10]}]") 
+
     # --------------------------------------
