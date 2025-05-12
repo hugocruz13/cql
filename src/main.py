@@ -26,6 +26,8 @@ else:
 			resultado = ExpEval.evaluate(ast)
 			#if resultado is not None:
 			print(f"<< {resultado}")
+		except SyntaxError as e:
+			print(e)
 		except Exception as e:
 			print(e)
 
