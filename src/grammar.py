@@ -136,14 +136,17 @@ class Grammar:
     def p_p16(self, p):
         """ QRS  : tk_select SELEC tk_from tk_id tk_limit tk_num ';' """
         print('reduce', "QRS  : tk_select SELEC tk_from tk_id tk_limit tk_num ';'")
+        p[0] = {'op':p[1],'args':[p[2], p[4], p[6]]}
 
     def p_p17(self, p):
         """ QRS  : tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num ';' """
         print('reduce', "QRS  : tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num ';'")
+        p[0] = {'op':p[1],'args':[p[2], p[4], p[6], p[8]]}
 
     def p_p18(self, p):
         """ SELEC  : '*' """
         print('reduce', "SELEC  : '*'")
+        p[0] = p[1]
 
     def p_p19(self, p):
         """ SELEC  : COLLIST """
@@ -163,14 +166,17 @@ class Grammar:
     def p_p22(self, p):
         """ CONDLIST  : COND tk_and CONDLIST """
         print('reduce', "CONDLIST  : COND tk_and CONDLIST")
+        p[0] = [p[1]] + p[3]
         
     def p_p23(self, p):
         """ CONDLIST  : COND """
         print('reduce', "CONDLIST  : COND")
+        p[0] = p[1]
     
     def p_p24(self, p):
         """ COND  : tk_id OPERADOR VALOR """
         print('reduce', "COND  : tk_id OPERADOR VALOR")
+        p[0] = {'op': p[2], 'args': [p[1], p[3]]}
 
     def p_p25(self, p):                            
         """ OPERADOR  : tk_operator """
@@ -195,26 +201,32 @@ class Grammar:
     def p_p29(self, p):
         """ NEW  : tk_create tk_table tk_id QRS"""
         print('reduce', "NEW  : tk_create tk_table tk_id QRS")
+        p[0] = {'op': p[1], 'args': [p[3], p[4]]}
         
     def p_p30(self, p):
         """ NEW  : tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using '(' tk_id ')' ';' """
         print('reduce', "NEW  : tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using '(' tk_id ')' ';'")
+        p[0] = {'op': p[1],'args': [p[3],{'op': 'join','args': [p[5], p[7], p[10]]}]}
 
     def p_p31(self, p):
         """ PROCS  : tk_procedure tk_id tk_do CMDLIST tk_end"""
         print('reduce', "PROCS  : tk_procedure tk_id tk_do CMDLIST tk_end")
+        p[0] = {'op': p[1], 'args': [p[2], p[4]]}
 
     def p_p32(self, p):
         """ PROCS  : tk_call tk_id ';' """
         print('reduce', "PROCS  : tk_call tk_id ';'")
+        p[0] = {'op': p[1], 'args': p[2]}
 
     def p_p33(self, p):
         """ CMTS  : tk_cmts_line """
         print('reduce', "CMTS  : tk_cmts_line")
+        p[0]=None
 
     def p_p34(self, p):
         """ CMTS  : tk_cmts_block """
         print('reduce', "CMTS  : tk_cmts_block") 
+        p[0]=None
 
     # ---------------------------------------------  
     def p_error(self, p):
