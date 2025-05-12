@@ -30,17 +30,17 @@ class ExpLexer:
     literals = ['(', ')', '*', ';', ',']
     t_ignore = ' \n\t' # espaços são ignorados 
     
-    # Comentários linha
+    # Linha de comentários. 
     def t_tk_cmts_line(self, t):
         r"--[^\n]*"
         return t
     
-    # Bloco de comentários 
+    # Bloco de comentários. 
     def t_tk_cmts_block(self, t):
         r"\{-[\s\S]*?-\}" # Verificar se da depois ([\s\S]*?- qualquer letra e com enter, *?-0 ou mais ocorrências,lazy)
         return t
     
-    # Operadores
+    # Operadores.
     def t_tk_operator(self, t):
         r"=|<>|<=|>=|<|>"
         return t
