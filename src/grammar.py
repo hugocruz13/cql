@@ -49,7 +49,7 @@ class Grammar:
 	#   p26:    VALOR → num
 	#   p27:          | string
     #   p28:          | numdec
-	#   p29:      NEW → "CREATE" "TABLE" id "SELECT" SELEC "FROM" id "WHERE" CONDLIST ';'
+	#   p29:      NEW → "CREATE" "TABLE" QRS
 	#	p30:          | "CREATE" "TABLE" id "FROM" id "JOIN" id "USING"'('key')' ';'
 	#   p31:    PROCS → "PROCEDURE" nome "DO" CMDLIST "END"
 	#   p32:          | "CALL" nome ';'
