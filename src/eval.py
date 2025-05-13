@@ -15,6 +15,7 @@ class ExpEval:
         ">=": lambda args: ExpEval._greater_or_equal(args),
         "<": lambda args: ExpEval._less(args),
         ">": lambda args: ExpEval._greater(args),
+        "seq": lambda args: ExpEval._seq(args)
     }
     
     @staticmethod
@@ -325,6 +326,13 @@ class ExpEval:
         except Exception as e:
             raise Exception(f"Erro ao criar filtro: {e}") 
     
+    @staticmethod
+    def _seq(args):
+        results = []
+        for cmd in args:
+            result = ExpEval.evaluate(cmd)
+            results.append(result)
+        return results
 
 
 ExpEval.symbols = {} 

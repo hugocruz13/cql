@@ -1,7 +1,9 @@
-IMPORT TABLE estacoes FROM "estacoes.csv"; --TESTE
+IMPORT TABLE observacoes FROM "../data/observacoes.csv";
 SELECT * FROM observacoes;
-CREATE TABLE mais_quentes SELECT * FROM observacoes WHERE Temperatura > 22 ;
-PROCEDURE atualizar_observacoes DO
-    CREATE TABLE mais_quentes SELECT * FROM observacoes WHERE Temperatura > 22 ;
-    CREATE TABLE completo FROM estacoes JOIN observacoes USING(Id);
-END
+SELECT Temperatura FROM observacoes WHERE Temperatura > 22;  
+SELECT Id,Temperatura FROM observacoes WHERE Temperatura > 22 AND Id = 'E1';  
+SELECT Id FROM observacoes WHERE Id = 'E4'; 
+SELECT Temperatura,Radiacao FROM observacoes WHERE Temperatura > 16 AND Radiacao >= 100;  
+EXPORT TABLE observacoes AS "obs.csv";
+PRINT TABLE observacoes;
+SELECT Radiacao,Temperatura FROM observacoes WHERE Temperatura > 16 AND Radiacao >= 100 LIMIT 1;
