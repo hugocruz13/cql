@@ -22,6 +22,7 @@ if len(sys.argv) == 2:
 else:
 	for expr in iter(lambda: input("CQL >> "), ""):
 		try:
+
 			ast = lg.parse(expr)
 			resultado = ExpEval.evaluate(ast)
 			#if resultado is not None:

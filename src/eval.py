@@ -16,6 +16,7 @@ class ExpEval:
         ">=": lambda args: ExpEval._greater_or_equal(args),
         "<": lambda args: ExpEval._less(args),
         ">": lambda args: ExpEval._greater(args),
+        "CREATE": lambda args: ExpEval._create(args),
         "seq": lambda args: ExpEval._seq(args)
     }
     
@@ -324,6 +325,22 @@ class ExpEval:
             return filtro
         except Exception as e:
             raise Exception(f"Erro ao criar filtro: {e}") 
+        
+    @staticmethod
+    def _create(args):
+        if not args or len(args) != 2:
+            raise Exception("Erro: o operador 'CREATE' precisa de dois argumentos: nome da tabela e os dados.")
+        
+        table = args[0]
+        data = args[1]
+
+        if table in ExpEval.symbols:
+            raise Exception(f"Tabela'{table}' já existe.")
+        try:
+                ExpEval.symbols[table] = data  # Armazena na 'tabela'
+                return f"Tabela '{table}' criada com sucesso! "
+        except Exception as e:
+            raise Exception(f"Erro ao importar ficheiro: {e}")
     
     @staticmethod
     def _seq(args):
