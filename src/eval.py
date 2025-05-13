@@ -173,32 +173,36 @@ class ExpEval:
             if not args or len(args) < 2:
                 raise Exception("Erro: SELECT precisa de pelo menos colunas e nome da tabela.")
 
-            columns = args[0]
-            table = args[1]
-            filtros = []
+            columns = args[0] # Colunas a devolver pode ser [teste,test1] ou '*'
+            table = args[1] # Tabela onde vamos aplicar o filtro
+            filtros = [] # Lista dos filtros
             limit = None
             
+            # Se houver 3 argumentos significa que estamos a utilizar o WHERE
             if len(args) >= 3:
                 if callable(args[2]):
                     filtros.append(args[2])  # Adiciona o primeiro filtro
                 elif isinstance(args[2], list):  # Se for uma lista de filtros
                     filtros.extend(args[2])  # Adiciona todos os filtros dessa lista
 
+            # Se houver 4 argumentos significa que estamos a utilizar o LIMIT
             if len(args) >= 4:
                 try:
                     limit = int(args[3])
                 except ValueError:
                     raise Exception("Erro: o limite deve ser um número inteiro.")
 
+            # Verifica se a tabela existe
             if table not in ExpEval.symbols:
                 raise Exception(f"Tabela '{table}' não existe.")
 
+            # Recolhe os dados da tabela
             data = ExpEval.symbols[table]
 
             if not isinstance(data, list) or not data:
                 raise Exception(f"Tabela '{table}' sem dados válidos.")
 
-            # Aplica filtro, se existir
+            # Aplica os filtros, se existir
             for filtro in filtros:
                 data = list(filter(filtro, data))
 
@@ -219,79 +223,107 @@ class ExpEval:
         except Exception as e:
             raise Exception(f"Erro ao selecionar dados: {e}")
 
-    #filtros com erros (mas quase a dar)
-
+    #Filtros axiliares ao metedos _select 
     @staticmethod
     def _equal(args):
-        coluna= args[0]
-        valor = args[1]
+        try:
+            coluna= args[0] # Coluna a filtrar.
+            valor = args[1] # Valor a filtrar.
+            
+            # Metodo é guardado em memória para ser usado mais tarde.
+            def filtro(linha):
+                try:
+                    return linha[coluna] == valor
+                except:
+                    return False
+            return filtro
         
-        def filtro(linha):
-            try:
-                return linha[coluna] == valor
-            except:
-                return False
-        return filtro
+        except Exception as e:
+            raise Exception(f"Erro ao criar filtro: {e}") 
 
     @staticmethod
     def _not_equal(args):
-        coluna= args[0]
-        valor = args[1]        
+        try:
+            coluna= args[0] # Coluna a filtrar.
+            valor = args[1] # Valor a filtrar.       
 
-        def filtro(linha):
-            try:
-                return linha[coluna] != valor
-            except:
-                return False
-        return filtro
+            # Metodo é guardado em memória para ser usado mais tarde.
+            def filtro(linha):
+                try:
+                    return linha[coluna] != valor
+                except:
+                    return False
+            return filtro
+        except Exception as e:
+            raise Exception(f"Erro ao criar filtro: {e}") 
 
     @staticmethod
     def _less_or_equal(args):
-        coluna= args[0]
-        valor = args[1]
-        
-        def filtro(linha):
-            try:
-                return linha[coluna] <= valor
-            except:
-                return False
-        return filtro
-
+        try:
+            if isinstance(args[1], str):
+                raise Exception("Erro: A operação <= não permite strings")
+            
+            coluna= args[0]
+            valor = float(args[1])
+            
+            def filtro(linha):
+                try:
+                    return float(linha[coluna]) <= valor
+                except:
+                    return False
+            return filtro
+        except Exception as e:
+            raise Exception(f"Erro ao selecionar dados: {e}") 
     @staticmethod
     def _greater_or_equal(args):
-        coluna= args[0]
-        valor = float(args[1])
-        
-        def filtro(linha):
-            try:
-                return linha[coluna] >= valor
-            except:
-                return False
-        return filtro
-    
+        try:
+            if isinstance(args[1], str):
+                raise Exception(f"Erro ao criar filtro: {e}")
+            
+            coluna= args[0]
+            valor = float(args[1])
+            
+            def filtro(linha):
+                try:
+                    return float(linha[coluna]) >= valor
+                except:
+                    return False
+            return filtro
+        except Exception as e:
+            raise Exception(f"Erro ao criar filtro: {e}")    
     @staticmethod
     def _less(args):
-        coluna= args[0]
-        valor = args[1]
-        
-        def filtro(linha):
-            try:
-                return (linha[coluna]) < valor
-            except:
-                return False
-        return filtro
+        try:
+            if isinstance(args[1], str):
+                raise Exception("Erro: A operação < não permite strings")
+            coluna= args[0]
+            valor = float(args[1])
+            
+            def filtro(linha):
+                try:
+                    return float(linha[coluna]) < valor
+                except:
+                    return False
+            return filtro
+        except Exception as e:
+            raise Exception(f"Erro ao criar filtro: {e}") 
     
     @staticmethod
     def _greater(args):
-        coluna= args[0]
-        valor = args[1]
-        
-        def filtro(linha):
-            try:
-                return (linha[coluna]) > valor
-            except:
-                return False
-        return filtro
+        try:
+            if isinstance(args[1], str):
+                raise Exception("Erro: A operação > não permite strings")
+            coluna= args[0]
+            valor = float(args[1])
+            
+            def filtro(linha):
+                try:
+                    return float(linha[coluna]) > valor
+                except:
+                    return False
+            return filtro
+        except Exception as e:
+            raise Exception(f"Erro ao criar filtro: {e}") 
     
 
 
