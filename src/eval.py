@@ -9,6 +9,7 @@ class ExpEval:
         "RENAME": lambda args: ExpEval._rename(args),
         "PRINT": lambda args: ExpEval._print(args),       
         "SELECT": lambda args: ExpEval._select(args),
+        "AND": lambda args: ExpEval.evaluate(args),
         "=": lambda args: ExpEval._equal(args),
         "<>": lambda args: ExpEval._not_equal(args),
         "<=": lambda args: ExpEval._less_or_equal(args),
@@ -30,8 +31,6 @@ class ExpEval:
         if type(ast) is str:
             return ast
         if type(ast) is list:
-            if all(isinstance(item, dict) and 'op' in item and 'args' in item for item in ast):
-                return [ExpEval._eval_operator(item) for item in ast]
             return ast
         raise Exception(f"Unknown AST type")
     
