@@ -191,7 +191,7 @@ class Grammar:
     def p_p27(self, p):
         """ VALOR  : tk_string """
         print('reduce', "VALOR  : tk_string")
-        p[0] = p[1]
+        p[0] = p[1].strip("'")
 
     def p_p28(self, p):
         """ VALOR  : tk_num_dec """
