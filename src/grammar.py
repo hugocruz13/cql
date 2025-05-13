@@ -52,6 +52,7 @@ class Grammar:
 	#	p29:          | "CREATE" "TABLE" id "FROM" id "JOIN" id "USING"'('key')' ';'
 	#   p30:    PROCS → "PROCEDURE" nome "DO" CMDLIST "END"
 	#   p31:          | "CALL" nome ';'
+    #   p32           | "DELETE" nome ';'
     # -----------------------------
 
 
@@ -208,6 +209,11 @@ class Grammar:
     def p_p31(self, p):
         """ PROCS  : tk_call tk_id ';' """
         print('reduce', "PROCS  : tk_call tk_id ';'")
+        p[0] = {'op': p[1], 'args': p[2]}
+
+    def p_p32(self, p):
+        """ PROCS  : tk_delete tk_id ';' """
+        print('reduce', "PROCS  : tk_delete tk_id ';'")
         p[0] = {'op': p[1], 'args': p[2]}
 
     # ---------------------------------------------  

@@ -17,12 +17,15 @@ if len(sys.argv) == 2:
 			pp.pprint(tree)
 			resultado = ExpEval.evaluate(tree)
 			print(f"<< {resultado}")
+		except SyntaxError as e:
+			print(e)
 		except Exception as e:
 			print(e, file=sys.stderr)
 else:
 	for expr in iter(lambda: input("CQL >> "), ""):
+		if expr.lower() == "exit":
+			break
 		try:
-
 			ast = lg.parse(expr)
 			pp.pprint(ast)
 			resultado = ExpEval.evaluate(ast)

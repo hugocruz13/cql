@@ -21,10 +21,12 @@ class ExpLexer:
                       'PROCEDURE' : 'tk_procedure', 
                       'DO' : 'tk_do', 
                       'CALL': 'tk_call',
+                      'DELETE': 'tk_delete',
                       'USING': 'tk_using',
                       'SELECT': 'tk_select',
                       'END':'tk_end'                    
                     }
+    
     tk_reserved = list(set( reservedwords.values())) 
     tokens   = ("tk_operator", "tk_id", "tk_file", "tk_num" ,"tk_num_dec", "tk_string") + tuple(tk_reserved)
     literals = ['(', ')', '*', ';', ',']
