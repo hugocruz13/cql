@@ -1,4 +1,4 @@
-IMPORT TABLE observacoes FROM "../data/observacoes.csv";
+IMPORT TABLE observacoes FROM "../data/observacoes.csv"; --teste
 SELECT * FROM observacoes;
 SELECT Temperatura FROM observacoes WHERE Temperatura > 22;  
 SELECT Id,Temperatura FROM observacoes WHERE Temperatura > 22 AND Id = 'E1';  
