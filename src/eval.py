@@ -17,6 +17,8 @@ class ExpEval:
         "<": lambda args: ExpEval._less(args),
         ">": lambda args: ExpEval._greater(args),
         "CREATE": lambda args: ExpEval._create(args),
+        "PROCEDURE": lambda args: ExpEval._procedure(args),
+        "CALL": lambda args: ExpEval._call(args),
         "seq": lambda args: ExpEval._seq(args)
     }
     
@@ -43,6 +45,13 @@ class ExpEval:
 
             if not isinstance(raw_args, list):
                 raw_args = [raw_args]
+
+            if op == "PROCEDURE":
+                if op in ExpEval.operators:
+                    func = ExpEval.operators[op]
+                    return func(raw_args)
+                else:
+                    raise Exception(f"Erro ao criar o procedure {op}")
 
             args = [ExpEval.evaluate(a) for a in raw_args]
 
@@ -172,13 +181,16 @@ class ExpEval:
     def _select(args):
         try:
             if not args or len(args) < 2:
-                raise Exception("Erro: SELECT precisa de pelo menos colunas e nome da tabela.")
+                raise Exception("Erro: SELECT necessita do nome da tabela e as colunas a selecionar.")
 
             columns = args[0] # Colunas a devolver pode ser [teste,test1] ou '*'
             table = args[1] # Tabela onde vamos aplicar o filtro
             filtros = [] # Lista dos filtros
             limit = None
-            
+
+            if columns != "*" and not isinstance(columns, list):
+                raise Exception("Erro: colunas devem ser '*' ou uma lista de nomes de colunas.")
+
             # Se houver 3 argumentos significa que estamos a utilizar o WHERE
             if len(args) >= 3:
                 if callable(args[2]):
@@ -341,6 +353,44 @@ class ExpEval:
                 return f"Tabela '{table}' criada com sucesso! "
         except Exception as e:
             raise Exception(f"Erro ao importar ficheiro: {e}")
+        
+    @staticmethod
+    def _procedure(args):
+        if not args or len(args) != 2:
+            raise Exception("Erro: o operador 'PROCEDURE' precisa de dois argumentos: nome do procedimento e comandos.")
+
+        proc_name = args[0]
+        commands = args[1]
+
+        if proc_name in ExpEval.procedure:
+            raise Exception(f"Procedimento '{proc_name}' já existe.")
+
+        if not isinstance(commands, dict):
+            raise Exception("Erro: os comandos do procedimento devem estar em uma lista.")
+
+        try:
+            ExpEval.procedure[proc_name] = commands
+            return f"Procedimento '{proc_name}' criado com sucesso!"
+        except Exception as e:
+            raise Exception(f"Erro ao criar o procedure: {e}")
+    
+    @staticmethod
+    def _call(args):
+        if not args or len(args) != 1:
+            raise Exception("Erro: o operador 'CALL' apenas precisa de 1 argumento.")
+
+        proc_name = args[0]
+
+        if proc_name not in ExpEval.procedure:
+            raise Exception(f"Procedimento '{proc_name}' não existe.")
+
+        try:
+            procedure_body = ExpEval.procedure[proc_name]
+            result = ExpEval.evaluate(procedure_body)
+            print("Procedure executado com sucesso!")
+            return result
+        except Exception as e:
+            raise Exception(f"Erro ao criar o procedure: {e}")
     
     @staticmethod
     def _seq(args):
@@ -352,3 +402,4 @@ class ExpEval:
 
 
 ExpEval.symbols = {} 
+ExpEval.procedure = {}
