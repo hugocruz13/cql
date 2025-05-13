@@ -24,6 +24,7 @@ else:
 		try:
 
 			ast = lg.parse(expr)
+			pp.pprint(ast)
 			resultado = ExpEval.evaluate(ast)
 			#if resultado is not None:
 			print(f"<< {resultado}")
