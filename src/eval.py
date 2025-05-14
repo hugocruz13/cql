@@ -183,7 +183,7 @@ class ExpEval:
             if len(args) >= 3:
                 if callable(args[2]):
                     filtros.append(args[2])  # Adiciona o primeiro filtro
-                elif isinstance(args[2, int]): # se for um inteiro significa que é o LIMIT
+                elif isinstance(args[2], int): # se for um inteiro significa que é o LIMIT
                     limit = int(args[2])
                 elif isinstance(args[2], list):  # Se for uma lista de filtros
                     filtros.extend(args[2])  # Adiciona todos os filtros dessa lista
