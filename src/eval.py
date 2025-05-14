@@ -19,6 +19,7 @@ class ExpEval:
         "CREATE": lambda args: ExpEval._create(args),
         "CALL": lambda args: ExpEval._call(args),
         "DELETE": lambda args: ExpEval._delete(args),
+        "JOIN": lambda args: ExpEval._join(args),
         "seq": lambda args: ExpEval._seq(args)
     }
     
@@ -383,6 +384,38 @@ class ExpEval:
         except Exception as e:
             raise Exception(f"Erro ao criar o procedure: {e}")
         
+    @staticmethod
+    def _join(args):
+        if not args or len(args) != 3:
+            raise Exception("Erro: o operador 'JOIN' precisa de três argumentos: tabela1, tabela2 e a chave.")
+        
+        table1 = args[0]
+        table2 = args[1]
+        key = args[2]
+
+        if table1 not in ExpEval.symbols:
+            raise Exception(f"Erro: a tabela '{table1}' não existe")
+        
+        if table2 not in ExpEval.symbols:
+            raise Exception(f"Erro: a tabela '{table2}' não existe")
+
+        try:
+            data1 = ExpEval.symbols[table1]
+            data2 = ExpEval.symbols[table2]
+
+            joined_data = []
+            for row1 in data1:
+                for row2 in data2:
+                    if row1[key] == row2[key]:
+                        merged_row = row1.copy()  # Começa com os dados de row1
+                        for k, v in row2.items():
+                            if k != key:  # Evita sobrescrever a chave, opcional
+                                merged_row[k] = v
+                    joined_data.append(merged_row)
+            return joined_data
+        except Exception as e:
+            raise Exception(f"Erro ao criar o join: {e}")
+
     @staticmethod
     def _delete(args):
         if not args or len(args) != 1:

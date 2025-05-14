@@ -199,7 +199,7 @@ class Grammar:
     def p_p29(self, p):
         """ NEW  : tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using '(' tk_id ')' ';' """
         print('reduce', "NEW  : tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using '(' tk_id ')' ';'")
-        p[0] = {'op': p[1],'args': [p[3],{'op': 'join','args': [p[5], p[7], p[10]]}]}
+        p[0] = {'op': p[1],'args': [p[3],{'op': 'JOIN','args': [p[5], p[7], p[10]]}]}
 
     def p_p30(self, p):
         """ PROCS  : tk_procedure tk_id tk_do CMDLIST tk_end"""
