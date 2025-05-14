@@ -46,7 +46,7 @@ class ExpEval:
                 raw_args = [raw_args]
 
             if op == "PROCEDURE":
-                    ExpEval._procedure(raw_args)
+                    return ExpEval._procedure(raw_args)
 
             args = [ExpEval.evaluate(a) for a in raw_args]
 

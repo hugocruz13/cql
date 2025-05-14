@@ -21,12 +21,12 @@ if len(sys.argv) == 2:
 			print(e, file=sys.stderr)
 else:
 	for expr in iter(lambda: input("CQL >> "), ""):
+		if expr.lower() == "exit":
+			break
 		try:
-
 			ast = lg.parse(expr)
 			pp.pprint(ast)
 			resultado = ExpEval.evaluate(ast)
-			#if resultado is not None:
 			print(f"<< {resultado}")
 		except SyntaxError as e:
 			print(e)
