@@ -18,6 +18,7 @@ class ExpEval:
         ">": lambda args: ExpEval._greater(args),
         "CREATE": lambda args: ExpEval._create(args),
         "CALL": lambda args: ExpEval._call(args),
+        "DELETE": lambda args: ExpEval._delete(args),
         "seq": lambda args: ExpEval._seq(args)
     }
     
@@ -161,7 +162,6 @@ class ExpEval:
         try:
             for item in data:
                 print(item)
-            return f"Dados da tabela '{table}' imprimidos com sucesso."
         except Exception as e:
             raise Exception(f"Erro ao imprimir dados da tabela: {e}")
 
@@ -380,6 +380,22 @@ class ExpEval:
             result = ExpEval.evaluate(procedure_body)
             print("Procedure executado com sucesso!")
             return result
+        except Exception as e:
+            raise Exception(f"Erro ao criar o procedure: {e}")
+        
+    @staticmethod
+    def _delete(args):
+        if not args or len(args) != 1:
+            raise Exception("Erro: o operador 'DELETE' apenas precisa de 1 argumento.")
+
+        proc_name = args[0]
+
+        if proc_name not in ExpEval.procedure:
+            raise Exception(f"Procedimento '{proc_name}' não existe.")
+
+        try:
+            del ExpEval.procedure[proc_name]
+            return f"Procedure '{proc_name}' eliminada com sucesso."
         except Exception as e:
             raise Exception(f"Erro ao criar o procedure: {e}")
     

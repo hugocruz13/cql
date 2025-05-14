@@ -1,46 +1,42 @@
-Gramática:
+G = <T, N, S, P>
 
-	PROG → CMDLIST
- CMDLIST → CMD 
-	     | CMD CMDLIST			
-  	 CMD → CONF
-	     | QRS
-		 | NEW
-		 | PROCS
-		 | CMTS		
-	CONF → "IMPORT" "TABLE" id "FROM" file ';'
-		 | "EXPORT" "TABLE" id "AS" file ';'
-		 | "DISCARD" "TABLE" id ';'
-		 | "RENAME" "TABLE" id id ';'
-		 | "PRINT" "TABLE" id ';'	
-	 QRS → "SELECT" SELEC "FROM" id ';' 
-         | "SELECT" SELEC "FROM" id "WHERE" CONDLIST ';'
-		 | "SELECT" SELEC "FROM" id "LIMIT" num ';' 
-         | "SELECT" SELEC "FROM" id "WHERE" CONDLIST "LIMIT" num';'	
-   SELEC → '*'
-         | COLLIST		
- COLLIST → key
-	     | key',' COLLIST
-CONDLIST → COND "AND" CONDLIST
-         | COND	   
-	COND → key OPERADOR VALOR 
-OPERADOR → operador
-   VALOR → numdec
-	     | string
-	     | num
-	 NEW → "CREATE" "TABLE" id QRS
-	     | "CREATE" "TABLE" id "FROM" id "JOIN" id "USING"'('key')' ';'
-   PROCS → "PROCEDURE" id "DO" CMDLIST "END"
-	     | "CALL" id ';'
-	CMTS → '--' ate ao fim
-	     | '{-' texto_varias_linhas '-}'
-	
+Terminais (T): "IMPORT", "TABLE", "FROM", "AS", "DISCARD", "RENAME", "PRINT", "SELECT", "WHERE", "LIMIT", "CREATE", "JOIN", "USING", "DO", "END", "CALL", "DELETE", '*', ',', ';', '(', ')', id, file, num, numdec, string, operador
 
-CMDLIST -> Lista de comando
-CMD -> comando
-QRS -> queries
-PROCS -> procedures
-CONDLIST -> Lista condições
-COND -> Condições
-key -> coluna
-tabelas -> id
+Não Terminais (N): PROG, CMDLIST, CMD, CONF, QRS, SELEC, COLLIST, CONDLIST, COND, OPERADOR, VALOR, NEW, PROCS
+
+Axioma (S): PROG
+
+P1:	PROG         → CMDLIST  
+P2:	CMDLIST      → CMD  
+P3:              | CMD CMDLIST  
+P4: CMD          → CONF  
+P5:              | QRS  
+P6:              | NEW  
+P7:              | PROCS  
+P8: CONF         → "IMPORT" "TABLE" id "FROM" file ';'  
+P9:              | "EXPORT" "TABLE" id "AS" file ';'  
+P10:             | "DISCARD" "TABLE" id ';'  
+P11:             | "RENAME" "TABLE" id id ';'  
+P12:             | "PRINT" "TABLE" id ';'  
+P13: QRS         → "SELECT" SELEC "FROM" id ';'  
+P14:             | "SELECT" SELEC "FROM" id "WHERE" CONDLIST ';'  
+P15:             | "SELECT" SELEC "FROM" id "LIMIT" num ';'  
+P16:             | "SELECT" SELEC "FROM" id "WHERE" CONDLIST "LIMIT" num ';'  
+P17: SELEC       → '*'  
+P18:             | COLLIST  
+P19: COLLIST     → id  
+P20:             | id ',' COLLIST  
+P21: CONDLIST    → COND "AND" CONDLIST  
+P22:             | COND  
+P23: COND        → id OPERADOR VALOR  
+P24: OPERADOR    → operador  
+P25: VALOR       → numdec  
+P26:             | string  
+P27:             | num  
+P28: NEW         → "CREATE" "TABLE" id QRS  
+P29:             | "CREATE" "TABLE" id "FROM" id "JOIN" id "USING" '('id')' ';'  
+P30: PROCS       → "PROCEDURE" id "DO" CMDLIST "END"  
+P31:             | "CALL" id ';'  
+P32:             | "DELETE" id ';'  
+
+id: identificador de tabelas colunas e procedures. Faz a ponta para as palavras reservadas.

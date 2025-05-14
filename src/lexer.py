@@ -21,24 +21,26 @@ class ExpLexer:
                       'PROCEDURE' : 'tk_procedure', 
                       'DO' : 'tk_do', 
                       'CALL': 'tk_call',
+                      'DELETE': 'tk_delete',
                       'USING': 'tk_using',
                       'SELECT': 'tk_select',
                       'END':'tk_end'                    
                     }
+    
     tk_reserved = list(set( reservedwords.values())) 
-    tokens   = ("tk_cmts_line", "tk_cmts_block", "tk_operator", "tk_id", "tk_file", "tk_num" ,"tk_num_dec", "tk_string") + tuple(tk_reserved)
+    tokens   = ("tk_operator", "tk_id", "tk_file", "tk_num" ,"tk_num_dec", "tk_string") + tuple(tk_reserved)
     literals = ['(', ')', '*', ';', ',']
     t_ignore = ' \n\t' # espaços são ignorados 
     
     # Linha de comentários. 
     def t_tk_cmts_line(self, t):
         r"--[^\n]*"
-        return t
+        pass
     
     # Bloco de comentários. 
     def t_tk_cmts_block(self, t):
         r"\{-[\s\S]*?-\}" # Verificar se da depois ([\s\S]*?- qualquer letra e com enter, *?-0 ou mais ocorrências,lazy)
-        return t
+        pass
     
     # Operadores.
     def t_tk_operator(self, t):
