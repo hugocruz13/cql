@@ -17,7 +17,6 @@ class ExpEval:
         "<": lambda args: ExpEval._less(args),
         ">": lambda args: ExpEval._greater(args),
         "CREATE": lambda args: ExpEval._create(args),
-        "PROCEDURE": lambda args: ExpEval._procedure(args),
         "CALL": lambda args: ExpEval._call(args),
         "seq": lambda args: ExpEval._seq(args)
     }
@@ -47,11 +46,7 @@ class ExpEval:
                 raw_args = [raw_args]
 
             if op == "PROCEDURE":
-                if op in ExpEval.operators:
-                    func = ExpEval.operators[op]
-                    return func(raw_args)
-                else:
-                    raise Exception(f"Erro ao criar o procedure {op}")
+                    ExpEval._procedure(raw_args)
 
             args = [ExpEval.evaluate(a) for a in raw_args]
 
@@ -60,13 +55,6 @@ class ExpEval:
                 return func(args)
             else:
                 raise Exception(f"Unknown operator {op}")
-
-        if 'var' in ast:
-            varid = ast["var"]
-            if varid in ExpEval.symbols:
-                return ExpEval.symbols[varid]
-            raise Exception(f"error: local variable '{varid}' referenced before assignment")
-
         raise Exception('Undefined AST')
     
     @staticmethod
@@ -191,14 +179,17 @@ class ExpEval:
             if columns != "*" and not isinstance(columns, list):
                 raise Exception("Erro: colunas devem ser '*' ou uma lista de nomes de colunas.")
 
-            # Se houver 3 argumentos significa que estamos a utilizar o WHERE
+            # Se houver 3 argumentos significa que estamos a utilizar o WHERE ou o LIMIT
             if len(args) >= 3:
                 if callable(args[2]):
                     filtros.append(args[2])  # Adiciona o primeiro filtro
+                elif isinstance(args[2, int]): # se for um inteiro significa que é o LIMIT
+                    limit = int(args[2])
                 elif isinstance(args[2], list):  # Se for uma lista de filtros
                     filtros.extend(args[2])  # Adiciona todos os filtros dessa lista
+                    
 
-            # Se houver 4 argumentos significa que estamos a utilizar o LIMIT
+            # Se houver 4 argumentos significa que estamos a utilizar o WHERE e o LIMIT
             if len(args) >= 4:
                 try:
                     limit = int(args[3])
