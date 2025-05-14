@@ -411,7 +411,7 @@ class ExpEval:
                         for k, v in row2.items():
                             if k != key:  # Evita sobrescrever a chave, opcional
                                 merged_row[k] = v
-                    joined_data.append(merged_row)
+                        joined_data.append(merged_row)
             return joined_data
         except Exception as e:
             raise Exception(f"Erro ao criar o join: {e}")

@@ -29,7 +29,8 @@ else:
 			ast = lg.parse(expr)
 			pp.pprint(ast)
 			resultado = ExpEval.evaluate(ast)
-			print(f"<< {resultado}")
+			if resultado is not None:
+				print(f"<< {resultado}")
 		except SyntaxError as e:
 			print(e)
 		except Exception as e:
