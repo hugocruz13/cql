@@ -1,4 +1,7 @@
 import csv
+import os
+
+debug_mode = True
 
 class ExpEval:
 
@@ -70,6 +73,12 @@ class ExpEval:
         if table in ExpEval.symbols:
             raise Exception(f"Tabela'{table}' já existe.")
         
+        if not os.path.isabs(file_path) and not os.path.dirname(file_path):
+            if debug_mode:
+                file_path = os.path.join('.', 'data', file_path)
+            else:
+                file_path = os.path.join('..', 'data', file_path)
+        
         try:
             with open(file_path, newline='', encoding='utf-8') as csvfile:
                 reader = csv.DictReader(csvfile)
@@ -91,6 +100,12 @@ class ExpEval:
 
         if table not in ExpEval.symbols:
             raise Exception(f"Erro: a tabela '{table}' não existe !")
+        
+        if not os.path.isabs(file_path) and not os.path.dirname(file_path):
+            if debug_mode:
+                file_path = os.path.join('.', 'data', file_path)
+            else:
+                file_path = os.path.join('..', 'data', file_path)
     
         data = ExpEval.symbols[table]  #Dados que a tabela tem! 
 
