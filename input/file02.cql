@@ -19,7 +19,6 @@ IMPORT TABLE observacoes FROM "observacoes.csv";
 
 PROCEDURE consulta_rapida DO
   SELECT * FROM observacoes WHERE Radiacao > 200;
-  SELECT * FROM observacoes WHERE Temperatura BETWEEN 15 AND 20;
   SELECT * FROM observacoes LIMIT 5;
 END
 
@@ -27,8 +26,7 @@ CALL consulta_rapida;
 
 DELETE consulta_rapida;
 
-
-SELECT * FROM observacoes WHERE Temperatura > 20 AND Radiacao > 120;
+SELECT * FROM observacoes WHERE Temperatura > 10 AND Radiacao > 120;
 
 SELECT DataHoraObservacao, Temperatura FROM observacoes WHERE Temperatura > 24;
 

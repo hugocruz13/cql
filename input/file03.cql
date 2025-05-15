@@ -26,10 +26,11 @@ SELECT Id, Radiacao FROM observacoes WHERE Radiacao > 180;
 
 DISCARD TABLE estacao_e2;
 
-CALL filtros_personalizados;
-
 PROCEDURE filtros_personalizados DO
   SELECT * FROM observacoes WHERE Temperatura > 22;
   SELECT * FROM observacoes WHERE Radiacao < 50;
   SELECT Id FROM observacoes WHERE Temperatura > 20 AND Radiacao > 150;
 END
+
+CALL filtros_personalizados;
+
