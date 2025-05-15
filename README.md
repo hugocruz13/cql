@@ -16,6 +16,16 @@ Processamento de Linguagens (ESI) - laboral
 
 
 ### estrutura do projeto
+  ### Especificação da Gramática G = <N, T, S, P>
+
+- N = {PROG, CMDLIST, CMD, CONF, QRS, SELEC, COLLIST, CONDLIST, COND, OPERADOR, VALOR, NEW, PROCS}
+- T = {"IMPORT", "TABLE", "FROM", "AS", "DISCARD", "RENAME", "PRINT", "SELECT", "WHERE", "LIMIT", "CREATE", "JOIN", "USING", "DO", "END", "CALL", "DELETE", '*', ',', ';', '(', ')', id, file, num, numdec, string, operador}
+- PROG é o axioma da gramática
+- P contém as regras de produção ([p1-p32])
+
+A imagem abaixo mostra a **árvore sintática** que representa as transições e produções da gramática:
+
+![Árvore da Gramática](./img/gramatica.png)
 
   [/doc](./doc)   documentação de apoio do projeto desenvolvido / relatório do trabalho prático
   
