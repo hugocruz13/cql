@@ -1,7 +1,7 @@
 import csv
 import os
 
-debug_mode = True
+debug_mode = False
 
 class ExpEval:
 
