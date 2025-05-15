@@ -23,7 +23,6 @@ class ExpEval:
         "CALL": lambda args: ExpEval._call(args),
         "DELETE": lambda args: ExpEval._delete(args),
         "JOIN": lambda args: ExpEval._join(args),
-        "seq": lambda args: ExpEval._seq(args)
     }
     
     @staticmethod
@@ -51,7 +50,10 @@ class ExpEval:
                 raw_args = [raw_args]
 
             if op == "PROCEDURE":
-                    return ExpEval._procedure(raw_args)
+                return ExpEval._procedure(raw_args)
+
+            if op == 'seq':
+                return ExpEval._seq(raw_args) 
 
             args = [ExpEval.evaluate(a) for a in raw_args]
 
@@ -178,6 +180,8 @@ class ExpEval:
         try:
             for item in data:
                 print(item)
+            return f"Tabela '{table}' exibida com sucesso."
+
         except Exception as e:
             raise Exception(f"Erro ao imprimir dados da tabela: {e}")
 
@@ -449,6 +453,7 @@ class ExpEval:
     
     @staticmethod
     def _seq(args):
+
         results = []
         for cmd in args:
             result = ExpEval.evaluate(cmd)
