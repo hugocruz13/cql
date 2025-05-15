@@ -6,10 +6,14 @@ Processamento de Linguagens (ESI) - laboral
 
 ### grupo  06     
 
-| Número |      Nome     |
-| 23010  |   Hugo Cruz   |
-| 23016  |   Dani Cruz   |
+| Número | Nome          |
+|--------|---------------|
+| 23010  | Hugo Cruz     |
+| 23016  | Dani Cruz     |
 | 23279  | Hugo Baptista |
+
+
+
 
 ### estrutura do projeto
 
