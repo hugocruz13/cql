@@ -35,9 +35,7 @@ Processamento de Linguagens (ESI) - laboral
 
 ```sql
 IMPORT TABLE obs FROM "observacoes.csv";
-```
 
-```sql
 DISCARD TABLE obs;
 ```
 ---
@@ -51,9 +49,7 @@ SELECT * FROM observacoes WHERE Temperatura > 10 AND Radiacao > 100 LIMIT 1;
 
 ```sql
 CREATE TABLE completo SELECT * FROM observacoes WHERE Temperatura > 10;
-```
 
-```sql
 CREATE TABLE completo FROM est JOIN obs USING(Id);
 ```
 ---
@@ -63,14 +59,9 @@ PROCEDURE selecionar DO
   SELECT * FROM observacoes WHERE Temperatura > 22;
   SELECT * FROM observacoes WHERE Temperatura > 10 AND Radiacao > 100;
   SELECT * FROM observacoes LIMIT 2;
-END
-```
 
-```sql
 CALL selecionar;
-```
 
-```sql
 DELETE selecionar;
 ```
 ---
