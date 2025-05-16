@@ -69,13 +69,9 @@ DELETE selecionar;
 
 ```PYTHON
 python main.py ../input/file01.cql 
-```
 
-```PYTHON
 python main.py ../input/file02.cql 
-```
 
-```PYTHON
 python main.py ../input/file03.cql 
 ```
 
