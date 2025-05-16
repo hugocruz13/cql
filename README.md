@@ -2,7 +2,7 @@
 Processamento de Linguagens (ESI) - laboral
 -----
 
-## trabalho prático 
+## Trabalho prático 
 
 ### grupo  06     
 
@@ -15,7 +15,7 @@ Processamento de Linguagens (ESI) - laboral
 
 
 
-### estrutura do projeto
+### Estrutura do projeto
   ![Árvore da Gramática](./img/gramatica.png)
 
   [/doc](./doc)   documentação de apoio do projeto desenvolvido / relatório do trabalho prático
@@ -26,12 +26,12 @@ Processamento de Linguagens (ESI) - laboral
 
 
 
-### dependências de módulos externos 
+### Dependências de módulos externos 
 
 - [`ply`](https://pypi.org/project/ply/) — **Python Lex-Yacc**
 
 
-### exemplos de utilização 
+### Exemplos de utilização 
 
 ```sql
 IMPORT TABLE obs FROM "observacoes.csv";
@@ -40,7 +40,9 @@ PROCEDURE selecionar DO
   SELECT * FROM observacoes WHERE Temperatura > 10 AND Radiacao > 100;
   SELECT * FROM observacoes LIMIT 2;
 END
+```
 
+```sql
 CREATE TABLE completo FROM est JOIN obs USING(Id);
 ```
 
