@@ -4,7 +4,7 @@ Processamento de Linguagens (ESI) - laboral
 
 ## Trabalho prático 
 
-### grupo  06     
+### Grupo  06     
 
 | Número | Nome          |
 |--------|---------------|
@@ -18,11 +18,11 @@ Processamento de Linguagens (ESI) - laboral
 ### Estrutura do projeto
   ![Árvore da Gramática](./img/gramatica.png)
 
-  [/doc](./doc)   documentação de apoio do projeto desenvolvido / relatório do trabalho prático
+  [/doc](./doc)   documentação / relatório do trabalho prático
   
   [/data](./data) ficheiros de dados a serem usados no programa (.csv) 
 
-  [/input](./input) exemplos de código na linguagem CQL - Comma Query Language  (.cql)
+  [/input](./input)  CQL - Comma Query Language  (.cql)
 
 
 
@@ -35,6 +35,9 @@ Processamento de Linguagens (ESI) - laboral
 
 ```sql
 IMPORT TABLE obs FROM "observacoes.csv";
+```
+
+```sql
 PROCEDURE selecionar DO
   SELECT * FROM observacoes WHERE Temperatura > 22;
   SELECT * FROM observacoes WHERE Temperatura > 10 AND Radiacao > 100;
@@ -46,21 +49,21 @@ END
 CREATE TABLE completo FROM est JOIN obs USING(Id);
 ```
 
-#### ficheiro de entrada
+#### Ficheiro de entrada
 
-```bash
-python main.py ./input/exemplo01.cql 
+```PYTHON
+python main.py ../input/file01.cql 
 
+python main.py ../input/file02.cql 
 
-python main.py ./input/exemplo01.cql 
-
+python main.py ../input/file03.cql 
 ```
 
 #### de forma interativa (um comando de cada vez)
 
 ```bash
 python main.py 
->> IMPORT TABLE obs FROM "observacoes.csv" ;  -- por omissão procura observacoes.csv em ./data 
+CQL >> IMPORT TABLE obs FROM "observacoes.csv" ;  
 >> SELECT * FROM obs;
 ...
 ```
