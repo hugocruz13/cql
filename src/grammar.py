@@ -1,6 +1,8 @@
 from lexer import ExpLexer
 import ply.yacc as pyacc
 
+debug_mode = False
+
 class Grammar:
 
     def __init__(self):
@@ -58,162 +60,162 @@ class Grammar:
 
     def p_p1(self, p):
         """ PROG  : CMDLIST """
-        print('reduce', "PROG  : CMDLIST") 
+        if debug_mode: print('reduce', "PROG  : CMDLIST") 
         p[0] = p[1]
     
     def p_p2(self, p):
         """ CMDLIST  : CMD """
-        print('reduce', "CMDLIST  : CMD") 
+        if debug_mode: print('reduce', "CMDLIST  : CMD") 
         p[0] = p[1]
     
     def p_p3(self, p):
         """ CMDLIST  : CMD CMDLIST	  """
-        print('reduce', "CMDLIST  : CMD CMDLIST")
+        if debug_mode: print('reduce', "CMDLIST  : CMD CMDLIST")
         p[0] = {'op': 'seq', 'args': [p[1], p[2]]}
         
     def p_p4(self, p):
         """ CMD  : CONF	  """
-        print('reduce', "CMD  : CONF") 
+        if debug_mode: print('reduce', "CMD  : CONF") 
         p[0] = p[1]
     
     def p_p5(self, p):
         """ CMD  : QRS	  """
-        print('reduce', "CMD  : QRS") 
+        if debug_mode: print('reduce', "CMD  : QRS") 
         p[0] = p[1]
 
     def p_p6(self, p):
         """ CMD  : NEW	  """
-        print('reduce', "CMD  : NEW")
+        if debug_mode: print('reduce', "CMD  : NEW")
         p[0] = p[1] 
 
     def p_p7(self, p):
         """ CMD  : PROCS	  """
-        print('reduce', "CMD  : PROCS")
+        if debug_mode: print('reduce', "CMD  : PROCS")
         p[0] = p[1]        
 
     def p_p8(self, p):
         """ CONF  : tk_import tk_table tk_id tk_from tk_file ';'"""
-        print('reduce', "CONF  : tk_import tk_table tk_id tk_from tk_file ';'")
+        if debug_mode: print('reduce', "CONF  : tk_import tk_table tk_id tk_from tk_file ';'")
         p[0] = {'op': p[1], 'args': [p[3], p[5].strip('"')]} #strip remover caracteres do início e do fim de uma string
 
     def p_p9(self, p):
         """ CONF  : tk_export tk_table tk_id tk_as tk_file ';'"""
-        print('reduce', "CONF  : tk_export tk_table tk_id tk_as tk_file ';'")
+        if debug_mode: print('reduce', "CONF  : tk_export tk_table tk_id tk_as tk_file ';'")
         p[0] = {'op':p[1],'args':[p[3],p[5].strip('"')]} #strip remover caracteres do início e do fim de uma string
 
     def p_p10(self, p):
         """ CONF  : tk_discard tk_table tk_id ';'"""
-        print('reduce', "CONF  : tk_discard tk_table tk_id ';'")
+        if debug_mode: print('reduce', "CONF  : tk_discard tk_table tk_id ';'")
         p[0] = {'op':p[1],'args':p[3]}
 
     def p_p11(self, p):
         """ CONF  : tk_rename tk_table tk_id tk_id ';'"""
-        print('reduce', "CONF  : tk_rename tk_table tk_id tk_id ';'")
+        if debug_mode: print('reduce', "CONF  : tk_rename tk_table tk_id tk_id ';'")
         p[0] = {'op':p[1],'args':[p[3],p[4]]}
 
     def p_p12(self, p):
         """ CONF  : tk_print tk_table tk_id ';'"""
-        print('reduce', "CONF  : tk_print tk_table tk_id ';'")
+        if debug_mode: print('reduce', "CONF  : tk_print tk_table tk_id ';'")
         p[0] = {'op':p[1],'args':p[3]}
         
     def p_p13(self, p):
         """ QRS  : tk_select SELEC tk_from tk_id ';' """
-        print('reduce', "QRS  : tk_select SELEC tk_from tk_id ';'")
+        if debug_mode: print('reduce', "QRS  : tk_select SELEC tk_from tk_id ';'")
         p[0] = {'op':p[1],'args':[p[2], p[4]]}
     
     def p_p14(self, p):
         """ QRS  : tk_select SELEC tk_from tk_id tk_where CONDLIST ';' """
-        print('reduce', "QRS  : tk_select SELEC tk_from tk_id tk_where CONDLIST ';'")
+        if debug_mode: print('reduce', "QRS  : tk_select SELEC tk_from tk_id tk_where CONDLIST ';'")
         p[0] = {'op':p[1],'args':[p[2], p[4], p[6]]}
 
     def p_p15(self, p):
         """ QRS  : tk_select SELEC tk_from tk_id tk_limit tk_num ';' """
-        print('reduce', "QRS  : tk_select SELEC tk_from tk_id tk_limit tk_num ';'")
+        if debug_mode: print('reduce', "QRS  : tk_select SELEC tk_from tk_id tk_limit tk_num ';'")
         p[0] = {'op':p[1],'args':[p[2], p[4], p[6]]}
 
     def p_p16(self, p):
         """ QRS  : tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num ';' """
-        print('reduce', "QRS  : tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num ';'")
+        if debug_mode: print('reduce', "QRS  : tk_select SELEC tk_from tk_id tk_where CONDLIST tk_limit tk_num ';'")
         p[0] = {'op':p[1],'args':[p[2], p[4], p[6], p[8]]}
 
     def p_p17(self, p):
         """ SELEC  : '*' """
-        print('reduce', "SELEC  : '*'")
+        if debug_mode: print('reduce', "SELEC  : '*'")
         p[0] = p[1]
 
     def p_p18(self, p):
         """ SELEC  : COLLIST """
-        print('reduce', "SELEC  : COLLIST")
+        if debug_mode: print('reduce', "SELEC  : COLLIST")
         p[0] = p[1]
 
     def p_p19(self, p):
         """ COLLIST  : tk_id """
-        print('reduce', "COLLIST  : tk_id")
+        if debug_mode: print('reduce', "COLLIST  : tk_id")
         p[0] = [p[1]]
     
     def p_p20(self, p):
         """ COLLIST  : tk_id ',' COLLIST """
-        print('reduce', "COLLIST  : tk_id ',' COLLIST")
+        if debug_mode: print('reduce', "COLLIST  : tk_id ',' COLLIST")
         p[0] = [p[1]] + p[3]
                         
     def p_p21(self, p):
         """ CONDLIST  : COND tk_and CONDLIST """
-        print('reduce', "CONDLIST  : COND tk_and CONDLIST")
+        if debug_mode: print('reduce', "CONDLIST  : COND tk_and CONDLIST")
         p[0] = {'op': 'AND', 'args': [p[1], p[3]]}
         
     def p_p22(self, p):
         """ CONDLIST  : COND """
-        print('reduce', "CONDLIST  : COND")
+        if debug_mode: print('reduce', "CONDLIST  : COND")
         p[0] = p[1]
     
     def p_p23(self, p):
         """ COND  : tk_id OPERADOR VALOR """
-        print('reduce', "COND  : tk_id OPERADOR VALOR")
+        if debug_mode: print('reduce', "COND  : tk_id OPERADOR VALOR")
         p[0] = {'op': p[2], 'args': [p[1], p[3]]}
 
     def p_p24(self, p):                            
         """ OPERADOR  : tk_operator """
-        print('reduce', "OPERADOR  : tk_operator")
+        if debug_mode: print('reduce', "OPERADOR  : tk_operator")
         p[0] = p[1]
 
     def p_p25(self, p):
         """ VALOR  : tk_num """
-        print('reduce', "VALOR  : tk_num")
+        if debug_mode: print('reduce', "VALOR  : tk_num")
         p[0] = p[1]
 
     def p_p26(self, p):
         """ VALOR  : tk_string """
-        print('reduce', "VALOR  : tk_string")
+        if debug_mode: print('reduce', "VALOR  : tk_string")
         p[0] = p[1].strip("'")
 
     def p_p27(self, p):
         """ VALOR  : tk_num_dec """
-        print('reduce', "VALOR  : tk_num_dec")     
+        if debug_mode: print('reduce', "VALOR  : tk_num_dec")     
         p[0] = p[1] 
 
     def p_p28(self, p):
         """ NEW  : tk_create tk_table tk_id QRS"""
-        print('reduce', "NEW  : tk_create tk_table tk_id QRS")
+        if debug_mode: print('reduce', "NEW  : tk_create tk_table tk_id QRS")
         p[0] = {'op': p[1], 'args': [p[3], p[4]]}
         
     def p_p29(self, p):
         """ NEW  : tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using '(' tk_id ')' ';' """
-        print('reduce', "NEW  : tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using '(' tk_id ')' ';'")
+        if debug_mode: print('reduce', "NEW  : tk_create tk_table tk_id tk_from tk_id tk_join tk_id tk_using '(' tk_id ')' ';'")
         p[0] = {'op': p[1],'args': [p[3],{'op': 'JOIN','args': [p[5], p[7], p[10]]}]}
 
     def p_p30(self, p):
         """ PROCS  : tk_procedure tk_id tk_do CMDLIST tk_end"""
-        print('reduce', "PROCS  : tk_procedure tk_id tk_do CMDLIST tk_end")
+        if debug_mode: print('reduce', "PROCS  : tk_procedure tk_id tk_do CMDLIST tk_end")
         p[0] = {'op': p[1], 'args': [p[2], p[4]]}
 
     def p_p31(self, p):
         """ PROCS  : tk_call tk_id ';' """
-        print('reduce', "PROCS  : tk_call tk_id ';'")
+        if debug_mode: print('reduce', "PROCS  : tk_call tk_id ';'")
         p[0] = {'op': p[1], 'args': p[2]}
 
     def p_p32(self, p):
         """ PROCS  : tk_delete tk_id ';' """
-        print('reduce', "PROCS  : tk_delete tk_id ';'")
+        if debug_mode: print('reduce', "PROCS  : tk_delete tk_id ';'")
         p[0] = {'op': p[1], 'args': p[2]}
 
     # ---------------------------------------------  

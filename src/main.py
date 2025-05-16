@@ -3,6 +3,7 @@ from eval import ExpEval
 import sys
 from pprint import PrettyPrinter
 
+debug_mode = False
 pp = PrettyPrinter(sort_dicts=False)
 
 lg = Grammar()
@@ -14,7 +15,7 @@ if len(sys.argv) == 2:
 		contents = file.read()
 		try:
 			tree = lg.parse(contents)
-			pp.pprint(tree)
+			if debug_mode:pp.pprint(tree)
 			resultado = ExpEval.evaluate(tree)
 			print(f"<< {resultado}")
 		except SyntaxError as e:
@@ -27,7 +28,7 @@ else:
 			break
 		try:
 			ast = lg.parse(expr)
-			pp.pprint(ast)
+			if debug_mode:pp.pprint(ast)
 			resultado = ExpEval.evaluate(ast)
 			if resultado is not None:
 				print(f"<< {resultado}")
