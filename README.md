@@ -14,15 +14,15 @@ Processamento de Linguagens (ESI) - laboral
 
 ### Estrutura do projeto
 
-  [/src](./src)   source-code
+  [/src](./src) código fonte
 
   [/img](./img) gramatica / árvore abstrata / árvore semântica
   
   [/doc](./src)   documentação / relatório do trabalho prático
 
-  [/data](./data) ficheiros de dados a serem usados no programa (.csv) 
+  [/data](./data) ficheiros de dados (.csv)
 
-  [/input](./input)  CQL - Comma Query Language  (.cql)
+  [/input](./input)  CQL files (.cql)
 
 ### Dependências de módulos externos 
 
