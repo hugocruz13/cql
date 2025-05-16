@@ -16,8 +16,7 @@ Processamento de Linguagens (ESI) - laboral
 
 
 ### estrutura do projeto
-
-![Árvore da Gramática](./img/gramatica.png)
+  ![Árvore da Gramática](./img/gramatica.png)
 
   [/doc](./doc)   documentação de apoio do projeto desenvolvido / relatório do trabalho prático
   
